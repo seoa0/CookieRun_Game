@@ -1,0 +1,136 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 800px;
+    height: 700px;
+    margin: 30px auto 0; 
+    transition: opacity 0.5s ease;
+    opacity: 0;
+    background-color: #D8AE7E;
+}
+
+body.fade-in {
+    opacity: 1; 
+}
+
+body.fade-out {
+    opacity: 0;
+}
+
+header {
+    margin-top: 0;
+    padding-top: 20px;
+    padding-left: 30px;
+    width: 100%;
+    height: 80px;
+/*    background-color: lightpink; */
+/*    opcaity: 0.5;*/
+    line-height: 80px;
+}
+
+footer {
+    margin-bottom: 0;
+    width: 100%;
+    height: 80px;
+/*    background-color: lightpink; */
+/*    opcaity: 0.5;*/
+    text-align: center;
+    line-height: 80px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    height: 540px;
+}
+
+.left, .right {
+    width: 100px;
+    height: 100%;
+/*    background-color: #f6f9d4; */
+    opacity: 0.5;
+}
+
+.main {
+    width: 600px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+#cookierun_title {
+    margin-bottom: 170px;
+}
+
+#page-wrapper {
+    width: 100%;
+    height: 100%;
+    background-image: url('level_background.png'); 
+    background-size: cover; 
+}
+
+.back-button {
+    width: 70px;
+    height: 70px;
+    border: none;
+    background-image: url('back_button.png'); 
+    background-size: cover; 
+    background-color: transparent;
+    transition: transform 0.2s ease;
+}
+
+.level1-button {
+    margin: 10px;
+    width: 180px;
+    height: 60px;
+    border: none;
+    background-image: url('level1_button.png'); 
+    background-size: cover; 
+    background-color: transparent;
+    transition: transform 0.2s ease;
+}
+
+
+.level2-button {
+    margin: 10px;
+    width: 180px;
+    height: 60px;
+    border: none;
+    background-image: url('level2_button.png'); 
+    background-size: cover; 
+    background-color: transparent;
+    transition: transform 0.2s ease;
+}
+
+
+.level3-button {
+    margin: 10px;
+    width: 180px;
+    height: 60px;
+    border: none;
+    background-image: url('level3_button.png');
+    background-size: cover; 
+    background-color: transparent;
+    transition: transform 0.2s ease;
+}
+
+.level4-button {
+    margin: 10px;
+    width: 180px;
+    height: 60px;
+    border: none;
+    background-image: url('level4_button.png'); 
+    background-size: cover; 
+    background-color: transparent;
+    transition: transform 0.2s ease;
+}
+
+
+.back-button:hover, .level1-button:hover, .level2-button:hover, .level3-button:hover, .level4-button:hover{
+    transform: scale(1.1);
+}
