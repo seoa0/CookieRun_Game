@@ -83,6 +83,9 @@ $(document).ready(function() {
     // 패들 크기
     let paddleHeight = 10;
     let paddleWidth = 100;
+    paddleWidth = localStorage.getItem('paddleWidth'); // 패들 길이 업데이트
+    
+    console.log(paddleWidth);
 
     // 공의 초기 위치
     // let x = 10;

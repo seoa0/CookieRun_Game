@@ -95,6 +95,10 @@ $(document).ready(function() {
             backgroundSize: 'cover' 
         });
 
+        function limeCookie(){ // 패들의 길이가 길어진다.
+            localStorage.setItem('paddleWidth', '200'); // 패들 길이 두배
+        }
+
         // 악마맛 쿠키
         var cbutton3 = $('<button class="cookie-button"></button>');
         cbutton3.css({ 
@@ -150,6 +154,7 @@ $(document).ready(function() {
         });
 
         cbutton2.click(function() {
+            limeCookie();
             if (!snowClicked) {
                 snowClicked = true;
                 $(this).css('backgroundImage', 'url("lime2_cookie.png")');

@@ -83,6 +83,10 @@ $(document).ready(function() {
             backgroundSize: 'cover' 
         });
 
+        function princessCookie(){ // 보너스타임을 더 오래 지속시켜준다.
+            localStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
+        }
+
         // 눈설탕맛 쿠키
         var cbutton2 = $('<button class="cookie-button"></button>');
         cbutton2.css({ 
@@ -94,6 +98,10 @@ $(document).ready(function() {
             backgroundSize: 'cover' 
         });
 
+        function snowCookie(){ // 하단에 얼음벽을 생성한다.
+            localStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
+        }
+
         // 웨어울프맛 쿠키
         var cbutton3 = $('<button class="cookie-button"></button>');
         cbutton3.css({ 
@@ -104,6 +112,10 @@ $(document).ready(function() {
             backgroundImage: 'url("wolf1_cookie.png")', 
             backgroundSize: 'cover' 
         });
+
+        function wolfCookie(){ // 일정확률로 떨어진 공을 부활시킨다.
+            localStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
+        }
 
         // 각 버튼의 클릭된 상태를 추적하는 변수들
         var princessClicked = false;
@@ -123,6 +135,7 @@ $(document).ready(function() {
         });
 
         cbutton1.click(function() {
+            princessCookie();
             if (!princessClicked) {
                 princessClicked = true;
                 $(this).css('backgroundImage', 'url("princess2_cookie.png")');
@@ -149,6 +162,7 @@ $(document).ready(function() {
         });
 
         cbutton2.click(function() {
+            snowCookie();
             if (!snowClicked) {
                 snowClicked = true;
                 $(this).css('backgroundImage', 'url("snow2_cookie.png")');
@@ -174,6 +188,7 @@ $(document).ready(function() {
         });
 
         cbutton3.click(function() {
+            wolfCookie();
             if (!wolfClicked) {
                 wolfClicked = true;
                 $(this).css('backgroundImage', 'url("wolf2_cookie.png")');
