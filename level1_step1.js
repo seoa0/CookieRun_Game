@@ -15,15 +15,6 @@ $(document).ready(function() {
         goToPage('level1.html'); 
     });
 
-
-
-
-
-
-
-    /* 벽돌깨기 */
-
-
     // 플레이어의 생명 수
     let hearts = 3;
 
@@ -56,7 +47,6 @@ $(document).ready(function() {
     plainBlockImage.src = 'block1.png';
     specialBlockImage.src = 'special_block.png';
 
-
     // 캔버스 요소와 그리기 컨텍스트 설정
     let canvas = document.getElementById("myCanvars");
     let ctx = canvas.getContext('2d');
@@ -74,11 +64,9 @@ $(document).ready(function() {
     let blockOffsetTop = 23; // 상단 여백
     let blockOffsetLeft = 30; // 좌측 여백
 
-
-
     // 공의 이동 속도
     let dx = 2;
-    let dy = 2;
+    let dy = -2;  // 공이 처음에 위로 이동하도록 설정
 
     // 패들 크기
     let paddleHeight = 10;
@@ -88,14 +76,12 @@ $(document).ready(function() {
     console.log(paddleWidth);
 
     // 공의 초기 위치
-    // let x = 10;
-    // let y = 10;
     let x = canvas.width / 2;
     let y = canvas.height - paddleHeight - 70; // 패들 위에 공을 배치하기 위해 paddleHeight 만큼 위로 올림
 
     // 패들 초기 위치
     let paddleX = (canvas.width / 2) - (paddleWidth / 2);  
-    let paddleY = canvas.height - 50;
+    let paddleY = canvas.height - paddleHeight - 20;
 
     // 키보드 입력 처리를 위한 변수 초기 설정
     let leftPressed = false;
@@ -145,7 +131,6 @@ $(document).ready(function() {
                     } else {
                         ctx.drawImage(plainBlockImage, blockX, blockY, blockWidth, blockHeight); // 일반 블록
                     }
-                    //ctx.fill();
                     ctx.closePath();
                 }
             }
@@ -186,7 +171,8 @@ $(document).ready(function() {
 
     // 공을 5개로 증가시키는 함수 (보너스타임)
     function increaseBalls() {
-        
+        // 공을 5개로 증가시키는 로직을 추가합니다.
+        // 예를 들어, 새로운 공 객체를 생성하고 이들을 화면에 표시하는 코드를 추가할 수 있습니다.
     }
 
     // 생명을 표시하는 함수
@@ -210,6 +196,8 @@ $(document).ready(function() {
             // 게임이 종료되지 않았다면, 공과 패들의 초기 위치로 돌아가기
             x = canvas.width / 2;
             y = canvas.height - paddleHeight - 70;
+            dx = 2; // 공의 이동 속도 초기화
+            dy = -2; // 공의 이동 방향 초기화
             paddleX = (canvas.width - paddleWidth) / 2;
         }
     }
@@ -228,9 +216,6 @@ $(document).ready(function() {
         } else if (e.key === 'ArrowLeft' || e.key === 'Left') {
             leftPressed = true;
         }
-        if (e.key === ' ') {
-            spacePressed = true;
-        }
     }
 
     // 키보드 업 이벤트 핸들러
@@ -240,25 +225,20 @@ $(document).ready(function() {
         } else if (e.key === 'ArrowLeft' || e.key === 'Left') {
             leftPressed = false;
         }
-        if (e.key === ' ') {
-            spacePressed = false;
-        }
-
     }
 
     // 패들 이동 함수
     function movePaddle() {
         if (rightPressed && paddleX < canvas.width - paddleWidth) {
-            paddleX += 3;
+            paddleX += 5; // 패들 이동 속도를 증가시킴
         } else if (leftPressed && paddleX > 0) {
-            paddleX -= 3;
+            paddleX -= 5; // 패들 이동 속도를 증가시킴
         }
     }
 
-
     // 공 이미지 그리기 함수
     function drawBall() {
-        ctx.drawImage(ballImage, x - 10, y - 10, 40, 40); // 이미지 크기는 20x20, 이미지의 중심을 공의 중심으로 설정하기 위해 x-10, y-10
+        ctx.drawImage(ballImage, x - 10, y - 10, 20, 20); // 이미지 크기는 20x20, 이미지의 중심을 공의 중심으로 설정하기 위해 x-10, y-10
     }
 
     // 패들 그리기 함수
@@ -269,8 +249,6 @@ $(document).ready(function() {
         ctx.fill();
         ctx.closePath();
     }
-
-
 
     // 게임 그리기 함수
     function drawGame() {
@@ -296,23 +274,26 @@ $(document).ready(function() {
         collisionDetection();
 
         // 공의 경계처리
-        if (x + dx > canvas.width - 30 || x + dx < 10) {
+        if (x + dx > canvas.width - 10 || x + dx < 10) {
             dx = -dx;
         }
-        if (y + dy > canvas.height - 10 || y + dy < 10) {
+        if (y + dy < 10) {
             dy = -dy;
-        }
-        
-        // 패들과 충돌처리
-        if (y + dy > canvas.height - paddleHeight - 70 && x > paddleX && x < paddleX + paddleWidth) {
-            dy = -dy;
-            // 패들이랑 공이랑 계속 겹쳐서 일단 임시방편 (근데 무빙이 좀 어색함)
-            //y = canvas.height - paddleHeight - 50 - 20; // 패들 위에서 공의 반지름 만큼 올리기
         }
 
-        // 게임 오버 처리
-        if (y + 10 >= canvas.height) {
-            heartLost();
+        // 패들과 충돌처리
+        if (y + dy > canvas.height - paddleHeight - 20) {
+            if (x > paddleX && x < paddleX + paddleWidth) {
+                dy = -dy;
+                // 패들과의 충돌 위치에 따라 공의 이동 방향을 조정
+                let collisionPoint = x - (paddleX + paddleWidth / 2);
+                collisionPoint = collisionPoint / (paddleWidth / 2);
+                let angle = collisionPoint * (Math.PI / 3); // 최대 60도 각도로 튕기기
+                dx = 4 * Math.sin(angle);
+                dy = -4 * Math.cos(angle);
+            } else {
+                heartLost(); // 공이 바닥에 닿으면 생명 감소
+            }
         }
 
         // 공 이동
@@ -322,4 +303,4 @@ $(document).ready(function() {
 
     // 게임 시작
     let gameStart = setInterval(drawGame, 10);
-}); 
+});
