@@ -310,8 +310,8 @@ $(document).ready(function() {
                 let collisionPoint = x - (paddleX + paddleWidth / 2);
                 collisionPoint = collisionPoint / (paddleWidth / 2);
                 let angle = collisionPoint * (Math.PI / 3); // 최대 60도 각도로 튕기기
-                dx = 4 * Math.sin(angle);
-                dy = -4 * Math.cos(angle);
+                dx = 2 * parseFloat(localStorage.getItem('dx')) * Math.sin(angle);
+                dy = 2 * parseFloat(localStorage.getItem('dy')) * Math.cos(angle);
                 console.log(dx, dy)
             } else {
                 heartLost(); // 공이 바닥에 닿으면 생명 감소

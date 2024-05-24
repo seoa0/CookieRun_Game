@@ -85,8 +85,8 @@ $(document).ready(function() {
 
         function princessCookie(){ // 보너스타임을 더 오래 지속시켜준다.
             localStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
-            localStorage.setItem('dx', '1');
-            localStorage.setItem('dy', '-1');
+            localStorage.setItem('dx', '1.5');
+            localStorage.setItem('dy', '-1.5'); // 공 속도 감소 시험
             
         }
 
@@ -120,6 +120,8 @@ $(document).ready(function() {
 
         function wolfCookie(){ // 일정확률로 떨어진 공을 부활시킨다.
             localStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
+            localStorage.setItem('dx', '2'); // 공 속도 초기화
+            localStorage.setItem('dy', '-2'); // 공 속도 초기화
         }
 
         // 각 버튼의 클릭된 상태를 추적하는 변수들

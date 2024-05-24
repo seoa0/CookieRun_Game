@@ -116,8 +116,8 @@ $(document).ready(function() {
 
         function alchemistCookie(){ // 보너스타임을 더 오래 지속시켜준다.
             localStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
-            localStorage.setItem('dx', '1');
-            localStorage.setItem('dy', '-1');
+            localStorage.setItem('dx', '1.5');
+            localStorage.setItem('dy', '-1.5'); // 공 속도 느리게
         }
 
         // 각 버튼의 클릭된 상태를 추적하는 변수들
