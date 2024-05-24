@@ -99,6 +99,16 @@ $(document).ready(function() {
     let clearX = parseInt(blockColumnCount / 2);
     let clearY = parseInt(blockRowCount / 2);
 
+    // 임의의 8개 블록 선택
+    let randomBlocks = [];
+    while (randomBlocks.length < 8) {
+        let randX = Math.floor(Math.random() * blockColumnCount);
+        let randY = Math.floor(Math.random() * blockRowCount);
+        if (!randomBlocks.some(block => block.x === randX && block.y === randY)) {
+            randomBlocks.push({ x: randX, y: randY });
+        }
+    }
+
     // 블록 배열 생성
     let blocks = [];
     for (let c = 0; c < blockColumnCount; c++) {
@@ -106,7 +116,8 @@ $(document).ready(function() {
         for (let r = 0; r < blockRowCount; r++) {
             // 스페셜 블록 여부를 랜덤으로 결정
             let isSpecial = (c === specialBlockX && r === specialBlockY);
-            blocks[c][r] = { x: 0, y: 0, status: 1, isSpecial: isSpecial }; // 각 블록의 초기 상태
+            let isRandomBlock = randomBlocks.some(block => block.x === c && block.y === r);
+            blocks[c][r] = { x: 0, y: 0, status: 1, isSpecial: isSpecial, hitCount: 0, isRandom: isRandomBlock }; // 각 블록의 초기 상태
         }
     }
 
@@ -147,7 +158,13 @@ $(document).ready(function() {
                     let blockY = block.y;
                     if (x > blockX && x < blockX + blockWidth && y > blockY && y < blockY + blockHeight) {
                         dy = -dy; // 충돌 시 공의 이동 방향 변경
-                        block.status = 0; // 충돌한 블록 제거
+                        if (block.isRandom) {
+                            block.hitCount++; // 충돌 횟수 증가
+                            if (block.hitCount >= 2) {
+                                block.status = 0; // 2번 충돌 시 블록 제거
+                            }
+                        } else {
+                        }
                         // 만약 클리어 블록을 깼다면 게임 클리어 처리
                         if (c === clearX && r === clearY && gameClear === false) {
                             gameClear = true;
