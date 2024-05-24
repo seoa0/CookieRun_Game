@@ -84,12 +84,12 @@ $(document).ready(function() {
         });
 
         function princessCookie(){ // 보너스타임을 더 오래 지속시켜준다.
-            localStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
-            localStorage.setItem('dx', '2');
-            localStorage.setItem('dy', '-2'); // 공 속도 초기화
-            localStorage.setItem('hearts', '3'); // 하트 갯수 초기화
+            sessionStorage.setItem('paddleWidth', '200'); // 패들 길이 초기화
+            sessionStorage.setItem('dx', '1.5');
+            sessionStorage.setItem('dy', '-1.5'); // 공 속도 초기화
+            sessionStorage.setItem('hearts', '3'); // 하트 갯수 초기화
 
-            localStorage.setItem('wolfAbilityActive', 'false'); // 웨어울프 능력 비활성화
+            sessionStorage.setItem('wolfAbilityActive', 'false'); // 웨어울프 능력 비활성화
         }
 
         // 눈설탕맛 쿠키
@@ -104,12 +104,12 @@ $(document).ready(function() {
         });
 
         function snowCookie(){ // 하단에 얼음벽을 생성한다.
-            localStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
-            localStorage.setItem('dx', '2'); // 공 속도 초기화
-            localStorage.setItem('dy', '-2'); // 공 속도 초기화
-            localStorage.setItem('hearts', '3'); // 하트 갯수 초기화
+            sessionStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
+            sessionStorage.setItem('dx', '2'); // 공 속도 초기화
+            sessionStorage.setItem('dy', '-2'); // 공 속도 초기화
+            sessionStorage.setItem('hearts', '3'); // 하트 갯수 초기화
 
-            localStorage.setItem('wolfAbilityActive', 'false'); // 웨어울프 능력 비활성화
+            sessionStorage.setItem('wolfAbilityActive', 'false'); // 웨어울프 능력 비활성화
 
         }
 
@@ -125,12 +125,12 @@ $(document).ready(function() {
         });
 
         function wolfCookie(){ // 일정확률로 떨어진 공을 부활시킨다.
-            localStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
-            localStorage.setItem('dx', '2'); // 공 속도 초기화
-            localStorage.setItem('dy', '-2'); // 공 속도 초기화
-            localStorage.setItem('hearts', '3'); // 하트 갯수 초기화
+            sessionStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
+            sessionStorage.setItem('dx', '2'); // 공 속도 초기화
+            sessionStorage.setItem('dy', '-2'); // 공 속도 초기화
+            sessionStorage.setItem('hearts', '3'); // 하트 갯수 초기화
 
-            localStorage.setItem('wolfAbilityActive', 'true'); // 웨어울프 능력 활성화
+            sessionStorage.setItem('wolfAbilityActive', 'true'); // 웨어울프 능력 활성화
         }
 
         // 각 버튼의 클릭된 상태를 추적하는 변수들

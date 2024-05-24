@@ -17,7 +17,7 @@ $(document).ready(function() {
 
     // 플레이어의 생명 수
     let hearts = 3;
-    hearts = parseFloat(localStorage.getItem('hearts'));
+    hearts = parseFloat(sessionStorage.getItem('hearts'));
 
     // 공 이미지 로드
     let ballImage = new Image();
@@ -68,14 +68,13 @@ $(document).ready(function() {
     // 공의 이동 속도
     let dx = 2;
     let dy = -2;  // 공이 처음에 위로 이동하도록 설정
-    dx = parseFloat(localStorage.getItem('dx'));
-    dy = parseFloat(localStorage.getItem('dy'));
-    console.log(dx, dy);
+    dx = parseFloat(sessionStorage.getItem('dx'));
+    dy = parseFloat(sessionStorage.getItem('dy')); // 공 속도 변경
 
     // 패들 크기
     let paddleHeight = 10;
-    let paddleWidth = 100;
-    paddleWidth = localStorage.getItem('paddleWidth'); // 패들 길이 업데이트
+    // let paddleWidth = 100;
+    paddleWidth = parseFloat(sessionStorage.getItem('paddleWidth')); // 패들 길이 업데이트
     
     console.log(paddleWidth);
 
@@ -211,7 +210,7 @@ $(document).ready(function() {
 
     // 생명이 감소할 때의 처리 함수
     function heartLost() {
-        let wolfAbilityActive = localStorage.getItem('wolfAbilityActive') === 'true';wolfAbilityActive = localStorage.getItem('wolfAbilityActive') === 'true';
+        let wolfAbilityActive = sessionStorage.getItem('wolfAbilityActive') === 'true';
         if (wolfAbilityActive && Math.random() < 0.5) {
             // 50% 확률로 생명이 감소하지 않음
             console.log("웨어울프맛 쿠키 능력 발동: 생명이 감소하지 않았습니다.");
@@ -225,8 +224,8 @@ $(document).ready(function() {
             // 게임이 종료되지 않았다면, 공과 패들의 초기 위치로 돌아가기
             x = canvas.width / 2;
             y = canvas.height - paddleHeight - 70;
-            dx = parseFloat(localStorage.getItem('dx'));
-            dy = parseFloat(localStorage.getItem('dy')); // 공 속도 초기화
+            dx = parseFloat(sessionStorage.getItem('dx'));
+            dy = parseFloat(sessionStorage.getItem('dy')); // 공 속도 초기화
             paddleX = (canvas.width - paddleWidth) / 2;
         }
     }
@@ -318,9 +317,8 @@ $(document).ready(function() {
                 let collisionPoint = x - (paddleX + paddleWidth / 2);
                 collisionPoint = collisionPoint / (paddleWidth / 2);
                 let angle = collisionPoint * (Math.PI / 3); // 최대 60도 각도로 튕기기
-                dx = 2 * parseFloat(localStorage.getItem('dx')) * Math.sin(angle);
-                dy = 2 * parseFloat(localStorage.getItem('dy')) * Math.cos(angle);
-                console.log(dx, dy, '패들에 튕김')
+                dx = 2 * parseFloat(sessionStorage.getItem('dx')) * Math.sin(angle);
+                dy = 2 * parseFloat(sessionStorage.getItem('dy')) * Math.cos(angle);
             } else {
                 heartLost(); // 공이 바닥에 닿으면 생명 감소
             }
