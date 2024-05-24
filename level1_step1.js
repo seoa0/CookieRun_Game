@@ -67,6 +67,9 @@ $(document).ready(function() {
     // 공의 이동 속도
     let dx = 2;
     let dy = -2;  // 공이 처음에 위로 이동하도록 설정
+    dx = parseFloat(localStorage.getItem('dx'));
+    dy = parseFloat(localStorage.getItem('dy'));
+    console.log(dx, dy);
 
     // 패들 크기
     let paddleHeight = 10;
@@ -291,6 +294,7 @@ $(document).ready(function() {
                 let angle = collisionPoint * (Math.PI / 3); // 최대 60도 각도로 튕기기
                 dx = 4 * Math.sin(angle);
                 dy = -4 * Math.cos(angle);
+                console.log(dx, dy)
             } else {
                 heartLost(); // 공이 바닥에 닿으면 생명 감소
             }

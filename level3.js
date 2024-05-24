@@ -73,7 +73,7 @@ $(document).ready(function() {
         });
 
         // 쿠키변경 버튼 추가
-        // 공주맛 쿠키
+        // 마법사맛 쿠키
         var cbutton1 = $('<button class="cookie-button"></button>');
         cbutton1.css({ 
             width: '170px', 
@@ -84,7 +84,11 @@ $(document).ready(function() {
             backgroundSize: 'cover' 
         });
 
-        // 눈설탕맛 쿠키
+        function wizardCookie(){ // 보너스타임을 더 오래 지속시켜준다.
+            localStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
+        }
+
+        // 예언자맛맛 쿠키
         var cbutton2 = $('<button class="cookie-button"></button>');
         cbutton2.css({ 
             width: '170px', 
@@ -95,7 +99,11 @@ $(document).ready(function() {
             backgroundSize: 'cover' 
         });
 
-        // 웨어울프맛 쿠키
+        function prophetCookie(){ // 보너스타임을 더 오래 지속시켜준다.
+            localStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
+        }
+
+        // 연금술사맛 쿠키
         var cbutton3 = $('<button class="cookie-button"></button>');
         cbutton3.css({ 
             width: '170px', 
@@ -105,6 +113,12 @@ $(document).ready(function() {
             backgroundImage: 'url("wolf1_cookie.png")', 
             backgroundSize: 'cover' 
         });
+
+        function alchemistCookie(){ // 보너스타임을 더 오래 지속시켜준다.
+            localStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
+            localStorage.setItem('dx', '1');
+            localStorage.setItem('dy', '-1');
+        }
 
         // 각 버튼의 클릭된 상태를 추적하는 변수들
         var princessClicked = false;
