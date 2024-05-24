@@ -211,6 +211,13 @@ $(document).ready(function() {
 
     // 생명이 감소할 때의 처리 함수
     function heartLost() {
+        let wolfAbilityActive = localStorage.getItem('wolfAbilityActive') === 'true';wolfAbilityActive = localStorage.getItem('wolfAbilityActive') === 'true';
+        if (wolfAbilityActive && Math.random() < 0.5) {
+            // 50% 확률로 생명이 감소하지 않음
+            console.log("웨어울프맛 쿠키 능력 발동: 생명이 감소하지 않았습니다.");
+            hearts++;
+        }
+
         hearts--; // 생명 감소
         if (hearts === 0) {
             gameOver();
@@ -218,8 +225,8 @@ $(document).ready(function() {
             // 게임이 종료되지 않았다면, 공과 패들의 초기 위치로 돌아가기
             x = canvas.width / 2;
             y = canvas.height - paddleHeight - 70;
-            dx = 2; // 공의 이동 속도 초기화
-            dy = -2; // 공의 이동 방향 초기화
+            dx = parseFloat(localStorage.getItem('dx'));
+            dy = parseFloat(localStorage.getItem('dy')); // 공 속도 초기화
             paddleX = (canvas.width - paddleWidth) / 2;
         }
     }
@@ -313,7 +320,7 @@ $(document).ready(function() {
                 let angle = collisionPoint * (Math.PI / 3); // 최대 60도 각도로 튕기기
                 dx = 2 * parseFloat(localStorage.getItem('dx')) * Math.sin(angle);
                 dy = 2 * parseFloat(localStorage.getItem('dy')) * Math.cos(angle);
-                console.log(dx, dy)
+                console.log(dx, dy, '패들에 튕김')
             } else {
                 heartLost(); // 공이 바닥에 닿으면 생명 감소
             }
