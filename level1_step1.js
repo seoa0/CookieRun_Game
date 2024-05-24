@@ -17,6 +17,7 @@ $(document).ready(function() {
 
     // 플레이어의 생명 수
     let hearts = 3;
+    hearts = parseFloat(localStorage.getItem('hearts'));
 
     // 공 이미지 로드
     let ballImage = new Image();

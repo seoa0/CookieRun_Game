@@ -73,7 +73,7 @@ $(document).ready(function() {
         });
 
         // 쿠키변경 버튼 추가
-        // 공주맛 쿠키
+        // 마카롱맛 쿠키
         var cbutton1 = $('<button class="cookie-button"></button>');
         cbutton1.css({ 
             width: '170px', 
@@ -84,7 +84,15 @@ $(document).ready(function() {
             backgroundSize: 'cover' 
         });
 
-        // 눈설탕맛 쿠키
+        function macaroonCookie(){ // 블럭의 강도를 낮춰줌
+            localStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
+            localStorage.setItem('dx', '2');
+            localStorage.setItem('dy', '-2'); // 공 속도 초기화
+            localStorage.setItem('hearts', '3'); // 하트 갯수 초기화
+            
+        }
+
+        // 우유푸딩맛 쿠키
         var cbutton2 = $('<button class="cookie-button"></button>');
         cbutton2.css({ 
             width: '170px', 
@@ -95,7 +103,15 @@ $(document).ready(function() {
             backgroundSize: 'cover' 
         });
 
-        // 웨어울프맛 쿠키
+        function milkpuddingCookie(){ // 하트 +2
+            localStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
+            localStorage.setItem('dx', '2');
+            localStorage.setItem('dy', '-2'); // 공 속도 초기화
+            localStorage.setItem('hearts', '5'); // 하트 갯수 +2
+            
+        }
+
+        // 팬케이크맛 쿠키
         var cbutton3 = $('<button class="cookie-button"></button>');
         cbutton3.css({ 
             width: '170px', 
@@ -106,12 +122,20 @@ $(document).ready(function() {
             backgroundSize: 'cover' 
         });
 
+        function pancakeCookie(){ // 패들 이동속도 증가
+            localStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
+            localStorage.setItem('dx', '2');
+            localStorage.setItem('dy', '-2'); // 공 속도 초기화
+            localStorage.setItem('hearts', '3'); // 하트 갯수 초기화
+            
+        }
+
         // 각 버튼의 클릭된 상태를 추적하는 변수들
         var princessClicked = false;
         var snowClicked = false;
         var wolfClicked = false;
 
-        // princess 버튼
+        // macaroonCookie 버튼
         cbutton1.hover(function() {
             // 클릭되지 않았을 때만 hover 효과 적용
             if (!princessClicked) {
@@ -124,6 +148,7 @@ $(document).ready(function() {
         });
 
         cbutton1.click(function() {
+            macaroonCookie();
             if (!princessClicked) {
                 princessClicked = true;
                 $(this).css('backgroundImage', 'url("princess2_cookie.png")');
@@ -138,7 +163,7 @@ $(document).ready(function() {
             }
         });
 
-        // snow 버튼
+        // milkpuddingCookie 버튼
         cbutton2.hover(function() {
             if (!snowClicked) {
                 $(this).css('backgroundImage', 'url("snow_skill.png")');
@@ -150,6 +175,7 @@ $(document).ready(function() {
         });
 
         cbutton2.click(function() {
+            milkpuddingCookie();
             if (!snowClicked) {
                 snowClicked = true;
                 $(this).css('backgroundImage', 'url("snow2_cookie.png")');
@@ -163,7 +189,7 @@ $(document).ready(function() {
             }
         });
 
-        // wolf 버튼
+        // pancakeCookie 버튼
         cbutton3.hover(function() {
             if (!wolfClicked) {
                 $(this).css('backgroundImage', 'url("wolf_skill.png")');
@@ -175,6 +201,7 @@ $(document).ready(function() {
         });
 
         cbutton3.click(function() {
+            pancakeCookie();
             if (!wolfClicked) {
                 wolfClicked = true;
                 $(this).css('backgroundImage', 'url("wolf2_cookie.png")');
