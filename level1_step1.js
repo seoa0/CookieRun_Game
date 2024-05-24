@@ -164,6 +164,7 @@ $(document).ready(function() {
                                 block.status = 0; // 2번 충돌 시 블록 제거
                             }
                         } else {
+                            block.status = 0; // 일반 블록은 1번 충돌 시 제거
                         }
                         // 만약 클리어 블록을 깼다면 게임 클리어 처리
                         if (c === clearX && r === clearY && gameClear === false) {
