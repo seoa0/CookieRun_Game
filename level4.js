@@ -128,6 +128,7 @@ $(document).ready(function() {
             localStorage.setItem('dy', '-2'); // 공 속도 초기화
             localStorage.setItem('hearts', '3'); // 하트 갯수 초기화
             
+            sessionStorage.setItem('paddleSpeed', 10); // 패들 이동속도
         }
 
         // 각 버튼의 클릭된 상태를 추적하는 변수들

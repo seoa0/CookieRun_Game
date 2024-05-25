@@ -90,6 +90,9 @@ $(document).ready(function() {
             sessionStorage.setItem('hearts', '3'); // 하트 갯수 초기화
 
             sessionStorage.setItem('wolfAbilityActive', 'false'); // 웨어울프 능력 비활성화
+
+            sessionStorage.setItem('paddleSpeed', 5); // 패들 이동속도
+            sessionStorage.setItem('ballRadius', 10); // 공 반지름
         }
 
         // 눈설탕맛 쿠키

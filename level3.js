@@ -86,6 +86,8 @@ $(document).ready(function() {
 
         function wizardCookie(){ // 보너스타임을 더 오래 지속시켜준다.
             localStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
+
+            sessionStorage.setItem('ballRadius', 20); // 공 반지름 2배
         }
 
         // 예언자맛맛 쿠키

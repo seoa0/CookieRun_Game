@@ -255,18 +255,25 @@ $(document).ready(function() {
         }
     }
 
+    // 패들 이동 속도
+    let paddleSpeed = 5;
+    paddleSpeed = parseFloat(sessionStorage.getItem('paddleSpeed'));
+    
     // 패들 이동 함수
     function movePaddle() {
         if (rightPressed && paddleX < canvas.width - paddleWidth) {
-            paddleX += 5; // 패들 이동 속도를 증가시킴
+            paddleX += paddleSpeed; // 패들 이동 속도를 증가시킴
         } else if (leftPressed && paddleX > 0) {
-            paddleX -= 5; // 패들 이동 속도를 증가시킴
+            paddleX -= paddleSpeed; // 패들 이동 속도를 증가시킴
         }
     }
 
+    let ballRadius = 10;
+    ballRadius = parseFloat(sessionStorage.getItem('ballRadius'));
+
     // 공 이미지 그리기 함수
     function drawBall() {
-        ctx.drawImage(ballImage, x - 10, y - 10, 20, 20); // 이미지 크기는 20x20, 이미지의 중심을 공의 중심으로 설정하기 위해 x-10, y-10
+        ctx.drawImage(ballImage, x - ballRadius, y - ballRadius, ballRadius*2, ballRadius*2); // 이미지 크기는 20x20, 이미지의 중심을 공의 중심으로 설정하기 위해 x-10, y-10
     }
 
     // 패들 그리기 함수
