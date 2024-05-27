@@ -85,14 +85,14 @@ $(document).ready(function() {
 
         function princessCookie(){ // 보너스타임을 더 오래 지속시켜준다.
             // level1
-            // 공주맛 쿠키
+            sessionStorage.getItem('bonustimeTime', '20000'); // 공주맛 쿠키 보너스타임 지속시간 두배
             sessionStorage.setItem('snowAbilityActive', 'false'); // 눈설탕 능력 비활성화   
             sessionStorage.setItem('wolfAbilityActive', 'false'); // 웨어울프 능력 비활성화
 
             // level2
             sessionStorage.setItem('jungleAbilityActive', 'false'); // 정글전사맛 쿠키 비활성화
             sessionStorage.setItem('paddleWidth', '100'); // 라임맛 쿠키 패들 길이 초기화
-            sessionStorage.setItem('devilAbilityActive', 'true'); // 악마맛 쿠키 활성화
+            sessionStorage.setItem('devilAbilityActive', 'false'); // 악마맛 쿠키 비활성화
 
             // level3
             sessionStorage.setItem('ballRadius', 10); // 마법사맛 쿠키 공 반지름 초기화
@@ -118,16 +118,26 @@ $(document).ready(function() {
         });
 
         function snowCookie(){ // 하단에 얼음벽을 생성한다.
-            sessionStorage.setItem('paddleWidth', '100'); // 패들 길이 초기화
-            sessionStorage.setItem('dx', '2'); // 공 속도 초기화
-            sessionStorage.setItem('dy', '-2'); // 공 속도 초기화
-            sessionStorage.setItem('hearts', '3'); // 하트 갯수 초기화
-
+            // level1
+            sessionStorage.getItem('bonustimeTime', '10000'); // 공주맛 능력 비활성화
+            sessionStorage.setItem('snowAbilityActive', 'true'); // 눈설탕 능력 활성화   
             sessionStorage.setItem('wolfAbilityActive', 'false'); // 웨어울프 능력 비활성화
 
-            sessionStorage.setItem('snowAbilityActive', 'true'); // 눈설탕 능력 활성화
+            // level2
+            sessionStorage.setItem('jungleAbilityActive', 'false'); // 정글전사맛 쿠키 비활성화
+            sessionStorage.setItem('paddleWidth', '100'); // 라임맛 쿠키 패들 길이 초기화
+            sessionStorage.setItem('devilAbilityActive', 'false'); // 악마맛 쿠키 비활성화
 
-            sessionStorage.setItem('jungleAbilityActive', 'false'); // 정글전사맛 쿠키 활성화
+            // level3
+            sessionStorage.setItem('ballRadius', 10); // 마법사맛 쿠키 공 반지름 초기화
+            //예언자맛 쿠키
+            sessionStorage.setItem('dx', '2');
+            sessionStorage.setItem('dy', '-2'); // 연금술사맛 쿠키 공 속도 초기화
+
+            //level4
+            //마카롱맛 쿠키
+            sessionStorage.setItem('hearts', '3'); // 우유푸딩맛 쿠키 하트 갯수 초기화
+            sessionStorage.setItem('paddleSpeed', 5); // 팬케이크맛 쿠키 패들 이동속도 초기화
         }
 
         // 웨어울프맛 쿠키

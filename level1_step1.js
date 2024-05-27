@@ -127,8 +127,45 @@ $(document).ready(function() {
     // 게임 클리어 여부
     let gameClear = false;
 
+    //악마맛쿠키
+    let devilAbilityActive = sessionStorage.getItem('devilAbilityActive') === 'true';
+    function deleteBlock(blocks) {
+        let deleteBlocks = [];
+    
+        // // 중간에 있는 블록의 좌표
+        // let middleBlockX = 7;
+        // let middleBlockY = 2;
+    
+        while (deleteBlocks.length < 8) {
+            let randX = Math.floor(Math.random() * blocks.length);
+            let randY = Math.floor(Math.random() * blocks[0].length);
+    
+            let selectedBlock = blocks[randX][randY];
+    
+            // 조건에 맞지 않는 블록들을 선택하도록 필터링
+            if (
+                !selectedBlock.isSpecial && // 특별 블록 제외
+                !(randX === clearX && randY === clearY) && // 중간 블록 제외
+                !deleteBlocks.some(block => block.x === randX && block.y === randY) // 중복 블록 제외
+            ) {
+                deleteBlocks.push({ x: randX, y: randY });
+            }
+        }
+    
+        // 선택된 블록들을 삭제 (status를 0으로 설정)
+        for (let block of deleteBlocks) {
+            blocks[block.x][block.y].status = 0;
+        }
+    }
+    
     // 블록 그리기 함수
     function drawBlocks() {
+        if (devilAbilityActive) {
+            deleteBlock(blocks); // devilAbilityActive가 true일 때 블록을 삭제
+            devilAbilityActive = false; // 블록 삭제 후 devilAbilityActive를 false로 설정
+            sessionStorage.setItem('devilAbilityActive', 'false'); // 세션 저장소에서도 업데이트
+        }
+    
         for (let c = 0; c < blockColumnCount; c++) {
             for (let r = 0; r < blockRowCount; r++) {
                 if (blocks[c][r].status === 1) {
@@ -151,7 +188,12 @@ $(document).ready(function() {
         }
     }
 
+    //정글전사맛 쿠키 양 옆 블록 같이 삭제
     let jungleAbilityActive = sessionStorage.getItem('jungleAbilityActive') === 'true';
+
+    let bonustimeTime = 10000;
+    // 공주맛 쿠키는 보너스 타임 두배
+    bonustimeTime = parseFloat(sessionStorage.getItem('bonustimeTime'));
 
     // 공과 블록 간의 충돌 감지
     function collisionDetection() {
