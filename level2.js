@@ -114,8 +114,8 @@ $(document).ready(function() {
             backgroundSize: 'cover' 
         });
 
-        function devilCookie(){ // 일부 블럭이 사라진다.
-            sessionStorage.setItem('paddleWidth', '200'); // 패들 길이 두배
+        function devilCookie(){ // 일부 블럭이 사라진다. 랜덤 블록 8개 삭제
+            sessionStorage.setItem('devilAbilityActive', 'true'); // 악마맛 쿠키 활성화
         }
 
         // 각 버튼의 클릭된 상태를 추적하는 변수들
