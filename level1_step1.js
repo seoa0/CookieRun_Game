@@ -285,6 +285,31 @@ $(document).ready(function() {
         ctx.closePath();
     }
 
+    // 눈설탕 벽 그리기
+    let wallSize = 100;
+    let wallX1 = canvas.width * 2 / 7;
+    let wallX2 = canvas.width * 5 / 7;
+    let wallY = paddleY - 1;
+    let snowAbilityActive = sessionStorage.getItem('snowAbilityActive') === 'true';
+    function drawWalls() {
+        if(snowAbilityActive){
+            //벽1
+            ctx.beginPath();
+            ctx.rect(wallX1, wallY, wallSize, paddleHeight);
+            ctx.fillStyle = 'blue';
+            ctx.fill();
+            ctx.closePath();
+            //벽2
+            ctx.beginPath();
+            ctx.rect(wallX2, wallY, wallSize, paddleHeight);
+            ctx.fillStyle = 'blue';
+            ctx.fill();
+            ctx.closePath();
+        }
+        
+        
+    }
+
     // 게임 그리기 함수
     function drawGame() {
         // 캔버스 초기화
@@ -298,6 +323,9 @@ $(document).ready(function() {
 
         // 패들 그리기
         drawPaddle();
+
+        // 눈설탕맛 선택시 하단 벽 그리기
+        drawWalls();
 
         // 블록 그리기
         drawBlocks();
@@ -328,6 +356,15 @@ $(document).ready(function() {
                 dy = 2 * parseFloat(sessionStorage.getItem('dy')) * Math.cos(angle);
             } else {
                 heartLost(); // 공이 바닥에 닿으면 생명 감소
+            }
+        }
+
+        // 눈설탕맛 벽 충돌처리
+        if(snowAbilityActive){
+            if (y + dy > canvas.height - paddleHeight - 20 -1) {
+                if ((x > wallX1 && x < wallX1 + wallSize) || (x > wallX2 && x < wallX2 + wallSize)) {
+                    dy = -dy;
+                }
             }
         }
 

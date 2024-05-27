@@ -91,6 +91,8 @@ $(document).ready(function() {
 
             sessionStorage.setItem('wolfAbilityActive', 'false'); // 웨어울프 능력 비활성화
 
+            sessionStorage.setItem('snowAbilityActive', 'false'); // 눈설탕 능력 비활성화
+
             sessionStorage.setItem('paddleSpeed', 5); // 패들 이동속도
             sessionStorage.setItem('ballRadius', 10); // 공 반지름
         }
@@ -114,6 +116,7 @@ $(document).ready(function() {
 
             sessionStorage.setItem('wolfAbilityActive', 'false'); // 웨어울프 능력 비활성화
 
+            sessionStorage.setItem('snowAbilityActive', 'true'); // 눈설탕 능력 활성화
         }
 
         // 웨어울프맛 쿠키
