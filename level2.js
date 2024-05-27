@@ -84,6 +84,10 @@ $(document).ready(function() {
             backgroundSize: 'cover' 
         });
 
+        function jungleCookie(){ // 주변 블록이 같이 제거된다.
+            sessionStorage.setItem('jungleAbilityActive', 'true'); // 정글전사맛 쿠키 활성화
+        }
+
         // 라임맛 쿠키
         var cbutton2 = $('<button class="cookie-button"></button>');
         cbutton2.css({ 
@@ -96,7 +100,7 @@ $(document).ready(function() {
         });
 
         function limeCookie(){ // 패들의 길이가 길어진다.
-            localStorage.setItem('paddleWidth', '200'); // 패들 길이 두배
+            sessionStorage.setItem('paddleWidth', '200'); // 패들 길이 두배
         }
 
         // 악마맛 쿠키
@@ -109,6 +113,10 @@ $(document).ready(function() {
             backgroundImage: 'url("devil1_cookie.png")', 
             backgroundSize: 'cover' 
         });
+
+        function devilCookie(){ // 일부 블럭이 사라진다.
+            sessionStorage.setItem('paddleWidth', '200'); // 패들 길이 두배
+        }
 
         // 각 버튼의 클릭된 상태를 추적하는 변수들
         var princessClicked = false;
@@ -128,6 +136,7 @@ $(document).ready(function() {
         });
 
         cbutton1.click(function() {
+            jungleCookie();
             if (!princessClicked) {
                 princessClicked = true;
                 $(this).css('backgroundImage', 'url("jungle2_cookie.png")');
@@ -168,7 +177,7 @@ $(document).ready(function() {
             }
         });
 
-        // wolf 버튼
+        // devil 버튼
         cbutton3.hover(function() {
             if (!wolfClicked) {
                 $(this).css('backgroundImage', 'url("devil_skill.png")');
@@ -180,6 +189,7 @@ $(document).ready(function() {
         });
 
         cbutton3.click(function() {
+            devilCookie();
             if (!wolfClicked) {
                 wolfClicked = true;
                 $(this).css('backgroundImage', 'url("devil2_cookie.png")');

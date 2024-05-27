@@ -74,7 +74,7 @@ $(document).ready(function() {
     // 패들 크기
     let paddleHeight = 10;
     // let paddleWidth = 100;
-    paddleWidth = parseFloat(sessionStorage.getItem('paddleWidth')); // 패들 길이 업데이트
+    let paddleWidth = parseFloat(sessionStorage.getItem('paddleWidth')); // 패들 길이 업데이트
     
     console.log(paddleWidth);
 
@@ -151,6 +151,8 @@ $(document).ready(function() {
         }
     }
 
+    let jungleAbilityActive = sessionStorage.getItem('jungleAbilityActive') === 'true';
+
     // 공과 블록 간의 충돌 감지
     function collisionDetection() {
         for (let c = 0; c < blockColumnCount; c++) {
@@ -159,30 +161,60 @@ $(document).ready(function() {
                 if (block.status === 1) {
                     let blockX = block.x;
                     let blockY = block.y;
-                    if (x > blockX && x < blockX + blockWidth && y > blockY && y < blockY + blockHeight) {
-                        dy = -dy; // 충돌 시 공의 이동 방향 변경
-                        if (block.isRandom) {
-                            block.hitCount++; // 충돌 횟수 증가
-                            if (block.hitCount >= 2) {
-                                block.status = 0; // 2번 충돌 시 블록 제거
+                    if(jungleAbilityActive){ // 정글전사맛 쿠키 선택시 양 옆의 블록도 데미지
+                        if (x > blockX - blockWidth && x < blockX + 2 * blockWidth && y > blockY && y < blockY + blockHeight) {
+                            dy = -dy; // 충돌 시 공의 이동 방향 변경
+                            if (block.isRandom) {
+                                block.hitCount++; // 충돌 횟수 증가
+                                if (block.hitCount >= 2) {
+                                    block.status = 0; // 2번 충돌 시 블록 제거
+                                }
+                            } else {
+                                block.status = 0; // 일반 블록은 1번 충돌 시 제거
                             }
-                        } else {
-                            block.status = 0; // 일반 블록은 1번 충돌 시 제거
+                            // 만약 클리어 블록을 깼다면 게임 클리어 처리
+                            if (c === clearX && r === clearY && gameClear === false) {
+                                gameClear = true;
+                                alert("GAME CLEAR!");
+                                document.location.reload();
+                                clearInterval(gameStart);
+                            }
+                            // 만약 보너스타임 블록을 깼다면 보너스타임 화면을 표시하고, 10초 후에 감추고 공을 5개로 증가시킴
+                            if (block.isSpecial) {
+                                document.getElementById('bonustime').style.display = 'block';
+                                setTimeout(function() {
+                                    document.getElementById('bonustime').style.display = 'none'; // 10초 후에 숨김
+                                    increaseBalls(); // 공을 5개로 증가시킴
+                                }, 10000);
+                            }
                         }
-                        // 만약 클리어 블록을 깼다면 게임 클리어 처리
-                        if (c === clearX && r === clearY && gameClear === false) {
-                            gameClear = true;
-                            alert("GAME CLEAR!");
-                            document.location.reload();
-                            clearInterval(gameStart);
-                        }
-                        // 만약 보너스타임 블록을 깼다면 보너스타임 화면을 표시하고, 10초 후에 감추고 공을 5개로 증가시킴
-                        if (block.isSpecial) {
-                            document.getElementById('bonustime').style.display = 'block';
-                            setTimeout(function() {
-                                document.getElementById('bonustime').style.display = 'none'; // 10초 후에 숨김
-                                increaseBalls(); // 공을 5개로 증가시킴
-                            }, 10000);
+                    }
+                    else{ // 나머지 쿠키
+                        if (x > blockX && x < blockX + blockWidth && y > blockY && y < blockY + blockHeight) {
+                            dy = -dy; // 충돌 시 공의 이동 방향 변경
+                            if (block.isRandom) {
+                                block.hitCount++; // 충돌 횟수 증가
+                                if (block.hitCount >= 2) {
+                                    block.status = 0; // 2번 충돌 시 블록 제거
+                                }
+                            } else {
+                                block.status = 0; // 일반 블록은 1번 충돌 시 제거
+                            }
+                            // 만약 클리어 블록을 깼다면 게임 클리어 처리
+                            if (c === clearX && r === clearY && gameClear === false) {
+                                gameClear = true;
+                                alert("GAME CLEAR!");
+                                document.location.reload();
+                                clearInterval(gameStart);
+                            }
+                            // 만약 보너스타임 블록을 깼다면 보너스타임 화면을 표시하고, 10초 후에 감추고 공을 5개로 증가시킴
+                            if (block.isSpecial) {
+                                document.getElementById('bonustime').style.display = 'block';
+                                setTimeout(function() {
+                                    document.getElementById('bonustime').style.display = 'none'; // 10초 후에 숨김
+                                    increaseBalls(); // 공을 5개로 증가시킴
+                                }, 10000);
+                            }
                         }
                     }
                 }
