@@ -105,15 +105,32 @@ $(document).ready(function() {
     document.addEventListener('keydown', keyDownHandler, false);
     document.addEventListener('keyup', keyUpHandler, false);
 
-    // 랜덤으로 보너스타임 블록 선택
-    let specialBlockX = Math.floor(Math.random() * blockColumnCount);
-    let specialBlockY = Math.floor(Math.random() * blockRowCount);
-
     // 클리어 블록
     let clearX = parseInt(blockColumnCount / 2);
     let clearY = parseInt(blockRowCount / 2);
 
     let score = 0;
+
+    // 랜덤으로 보너스타임 블록 선택                                             // 수정!!
+    let specialBlocks = [];
+    let prophetAbilityActive = sessionStorage.getItem('prophetAbilityActive') === 'true'; // 예언자맛 쿠키 
+
+    function getRandomBlock(exclude) {                                      // 추가!!
+        let block;
+        do {
+            block = {
+                x: Math.floor(Math.random() * blockColumnCount),
+                y: Math.floor(Math.random() * blockRowCount)
+            };
+        } while (exclude.some(b => b.x === block.x && b.y === block.y));
+        return block;
+    }
+
+    specialBlocks.push(getRandomBlock([{ x: clearX, y: clearY }]));
+    if (prophetAbilityActive) {
+        specialBlocks.push(getRandomBlock([{ x: clearX, y: clearY }, specialBlocks[0]]));
+        specialBlocks.push(getRandomBlock([{ x: clearX, y: clearY }, specialBlocks[0], specialBlocks[1]]));
+    }
 
     // 마카롱맛 쿠키는 3번 맞아야 없어지는 블록 갯수 0개
     let macaroonAbilityActive = sessionStorage.getItem('macaroonAbilityActive') === 'true';
@@ -127,20 +144,16 @@ $(document).ready(function() {
             // 각 블록의 초기 값 설정
             let initialHitValue;
             if(macaroonAbilityActive){
-                if (randomBlocks.length < 0) {
-                    initialHitValue = 3;
-                } else if (randomBlocks.length < 0) {
-                    initialHitValue = 2;
+                initialHitValue = 1;
             }
-        }
             else{
                 if (randomBlocks.length < 4) {
                     initialHitValue = 3;
                 } else if (randomBlocks.length < 8) {
                     initialHitValue = 2;
+                }
             }
             randomBlocks.push({ x: randX, y: randY, initialHitValue: initialHitValue });
-        }
         }
     }
 
@@ -151,7 +164,7 @@ $(document).ready(function() {
         for (let r = 0; r < blockRowCount; r++) {
             // 스페셜 블록 여부를 랜덤으로 결정
             let isClear = (c === clearX && r === clearY);
-            let isSpecial = (c === specialBlockX && r === specialBlockY);
+            let isSpecial = specialBlocks.some(b => b.x === c && b.y === r);
             let randomBlock = randomBlocks.find(block => block.x === c && block.y === r);
             let isRandomBlock = !!randomBlock;
             let remainingHits = randomBlock ? randomBlock.initialHitValue : 1;

@@ -144,7 +144,7 @@ $(document).ready(function() {
             backgroundSize: 'cover' 
         });
 
-        function milkpuddingCookie(){ // 하트 +2
+        function milkpuddingCookie(){ // 하트 +1
             sessionStorage.setItem('ballImage', 'image 22.png'); // 공 이미지 변경
             // level1
             sessionStorage.getItem('bonustimeTime', '10000'); // 공주맛 능력 초기화
@@ -164,7 +164,7 @@ $(document).ready(function() {
 
             //level4
             sessionStorage.setItem('macaroonAbilityActive', 'false'); // 마카롱맛 쿠키
-            sessionStorage.setItem('hearts', '5'); // 우유푸딩맛 쿠키 하트 갯수 5개
+            sessionStorage.setItem('hearts', '4'); // 우유푸딩맛 쿠키 하트 갯수 5개
             sessionStorage.setItem('paddleSpeed', 5); // 팬케이크맛 쿠키 패들 이동속도 초기화
         }
 
