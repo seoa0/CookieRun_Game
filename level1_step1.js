@@ -243,6 +243,7 @@ $(document).ready(function() {
     bonustimeTime = parseFloat(sessionStorage.getItem('bonustimeTime'));
 
     // 공과 블록 간의 충돌 감지
+    var bonusgame;
     function collisionDetection() {
         for (let c = 0; c < blockColumnCount; c++) {
             for (let r = 0; r < blockRowCount; r++) {
@@ -274,11 +275,13 @@ $(document).ready(function() {
                             // 만약 보너스타임 블록을 깼다면 보너스타임 화면을 표시하고, 10초 후에 감추고 공을 5개로 증가시킴
                             if (block.isSpecial) {
                                 document.getElementById('bonustime').style.display = 'block';
-                                var bonusgame = setInterval(drawBonusGame, 10); // 공을 5개로 증가시킴
+                                clearInterval(gameStart);
+                                bonusgame = setInterval(drawBonusGame, 10); // 공을 5개로 증가시킴
                                 setTimeout(function() {
                                     clearInterval(bonusgame);
                                     document.getElementById('bonustime').style.display = 'none'; // 10초 후에 숨김
-                                    gameStart;
+                                    if(!gameClear)
+                                        gameStart = setInterval(drawGame, 10);
                                 }, 10000);
                             }
                         }
@@ -303,7 +306,7 @@ $(document).ready(function() {
                             // 만약 보너스타임 블록을 깼다면 보너스타임 화면을 표시하고, 10초 후에 감추고 공을 5개로 증가시킴
                             if (block.isSpecial) {
                                 document.getElementById('bonustime').style.display = 'block';
-                                var bonusgame = setInterval(drawBonusGame, 10); // 공을 5개로 증가시킴
+                                bonusgame = setInterval(drawBonusGame, 10); // 공을 5개로 증가시킴
                                 setTimeout(function() {
                                     clearInterval(bonusgame);
                                     document.getElementById('bonustime').style.display = 'none'; // 10초 후에 숨김
@@ -325,10 +328,14 @@ $(document).ready(function() {
            bonusX : canvas.width / 2,
            bonusY : canvas.height - paddleHeight - 70,
            bonusDx : 2,
-           bonusDy : 2,
-           bonusBallImage : ballImage  
+           bonusDy : -2,
+           bonusBallImage : ballImage,
+           bonusWidth : 40,
+            bonusHeight : 40 
         });
     }
+    var bonuspaddleX = (canvas.width / 2) - (paddleWidth / 2);
+    var bonuspaddleY = canvas.height - 50;
 
     //공 그리기
     function drawBonusBalls() {
@@ -347,6 +354,15 @@ $(document).ready(function() {
 
             if (ball.bonusX + ball.bonusDx > canvas.width - 30 || ball.bonusX + ball.bonusDx < 10) {ball.bonusDx = -ball.bonusDx;}
             if (ball.bonusY + ball.bonusDy > canvas.height - 10 || ball.bonusY + ball.bonusDy < 10) {ball.bonusDy = -ball.bonusDy;}
+            
+            if (ball.bonusY + 10 >= canvas.height) {
+                ball.bonusX = 10;
+                ball.bonusY = 10;
+                ball.bonusDX = 0;
+                ball.bonusDy = 0;
+                ball.bonusWidth = 0;
+                ball.bonusHeight = 0;
+            }
         });
     }
 
@@ -366,6 +382,7 @@ $(document).ready(function() {
                             // 만약 클리어 블록을 깼다면 게임 클리어 처리
                             if (c === clearX && r === clearY && gameClear === false) {
                                 gameClear = true;
+                                clearInterval(bonusgame);
                                 clearInterval(gameStart);
                                 //팝업창 개설 -> 게임 오버 OR 게임 클리어 출력 + 아래에 확인 버튼 생성
                                 //->확인 버튼에서 click 이벤트 발생할 경우 goToPage(~); 실행
@@ -381,7 +398,7 @@ $(document).ready(function() {
     // 패들과 충돌처리
     function bonusCollisionPaddle() {
         balls.forEach(function(ball) {
-            if (ball.bonusY + ball.bonusDy > canvas.height - paddleHeight - 70 && ball.bonusX > paddleX && ball.bonusX < paddleX + paddleWidth) {ball.bonusDy = -ball.bonusDy;}
+            if (ball.bonusY + ball.bonusDy > canvas.height - paddleHeight - 70 && ball.bonusX > bonuspaddleX && ball.bonusX < bonuspaddleX + paddleWidth) {ball.bonusDy = -ball.bonusDy;}
         });
     }
 
@@ -405,39 +422,14 @@ $(document).ready(function() {
         //공 그리기
         drawBonusBalls();
 
-        // 공 그리기
-        drawBall();
-
         //공 이동 + 경계 처리
         bonusBallsMove();
-
-        // 공 이동
-        x += dx;
-        y += dy;
-
-        // 공의 경계처리
-        if (x + dx > canvas.width - 30 || x + dx < 10) {
-            dx = -dx;
-        }
-        if (y + dy > canvas.height - 10 || y + dy < 10) {
-            dy = -dy;
-        }
 
         //공과 블록간의 충돌 감지
         bonusCollisionDetection();
 
-        // 충돌 감지
-        collisionDetection();
-
         // 패들과 충돌처리
         bonusCollisionPaddle();
-
-        // 패들과 충돌처리
-        if (y + dy > canvas.height - paddleHeight - 70 && x > paddleX && x < paddleX + paddleWidth) {
-            dy = -dy;
-            // 패들이랑 공이랑 계속 겹쳐서 일단 임시방편 (근데 무빙이 좀 어색함)
-            //y = canvas.height - paddleHeight - 50 - 20; // 패들 위에서 공의 반지름 만큼 올리기
-        }
     }   
 
     function createPopup(pageUrl, backgroundImageUrl) {
@@ -503,12 +495,6 @@ $(document).ready(function() {
         popupBlock.append(cbutton);
 
         $('body').append(popupBlock);
-    }
-
-    // 공을 5개로 증가시키는 함수 (보너스타임)
-    function increaseBalls() {
-        // 공을 5개로 증가시키는 로직을 추가합니다.
-        // 예를 들어, 새로운 공 객체를 생성하고 이들을 화면에 표시하는 코드를 추가할 수 있습니다.
     }
 
     // 생명을 표시하는 함수
