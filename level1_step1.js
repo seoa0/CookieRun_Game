@@ -49,7 +49,6 @@ $(document).ready(function() {
     specialBlockImage.src = 'special_block.png';
 
     // 캔버스 요소와 그리기 컨텍스트 설정
-    let canvas = document.getElementById("myCanvars");
     let ctx = canvas.getContext('2d');
 
     // 캔버스 크기 설정
@@ -73,11 +72,8 @@ $(document).ready(function() {
 
     // 패들 크기
     let paddleHeight = 10;
-    // let paddleWidth = 100;
     let paddleWidth = parseFloat(sessionStorage.getItem('paddleWidth')); // 패들 길이 업데이트
     
-    console.log(paddleWidth);
-
     // 공의 초기 위치
     let x = canvas.width / 2;
     let y = canvas.height - paddleHeight - 70; // 패들 위에 공을 배치하기 위해 paddleHeight 만큼 위로 올림
@@ -108,7 +104,6 @@ $(document).ready(function() {
         let randX = Math.floor(Math.random() * blockColumnCount);
         let randY = Math.floor(Math.random() * blockRowCount);
         if (!randomBlocks.some(block => block.x === randX && block.y === randY)) {
-            randomBlocks.push({ x: randX, y: randY });
         }
     }
 
@@ -119,8 +114,6 @@ $(document).ready(function() {
         for (let r = 0; r < blockRowCount; r++) {
             // 스페셜 블록 여부를 랜덤으로 결정
             let isSpecial = (c === specialBlockX && r === specialBlockY);
-            let isRandomBlock = randomBlocks.some(block => block.x === c && block.y === r);
-            blocks[c][r] = { x: 0, y: 0, status: 1, isSpecial: isSpecial, hitCount: 0, isRandom: isRandomBlock }; // 각 블록의 초기 상태
         }
     }
 
@@ -206,13 +199,6 @@ $(document).ready(function() {
                     if(jungleAbilityActive){ // 정글전사맛 쿠키 선택시 양 옆의 블록도 데미지
                         if (x > blockX - blockWidth && x < blockX + 2 * blockWidth && y > blockY && y < blockY + blockHeight) {
                             dy = -dy; // 충돌 시 공의 이동 방향 변경
-                            if (block.isRandom) {
-                                block.hitCount++; // 충돌 횟수 증가
-                                if (block.hitCount >= 2) {
-                                    block.status = 0; // 2번 충돌 시 블록 제거
-                                }
-                            } else {
-                                block.status = 0; // 일반 블록은 1번 충돌 시 제거
                             }
                             // 만약 클리어 블록을 깼다면 게임 클리어 처리
                             if (c === clearX && r === clearY && gameClear === false) {
@@ -239,13 +225,6 @@ $(document).ready(function() {
                     else{ // 나머지 쿠키
                         if (x > blockX && x < blockX + blockWidth && y > blockY && y < blockY + blockHeight) {
                             dy = -dy; // 충돌 시 공의 이동 방향 변경
-                            if (block.isRandom) {
-                                block.hitCount++; // 충돌 횟수 증가
-                                if (block.hitCount >= 2) {
-                                    block.status = 0; // 2번 충돌 시 블록 제거
-                                }
-                            } else {
-                                block.status = 0; // 일반 블록은 1번 충돌 시 제거
                             }
                             // 만약 클리어 블록을 깼다면 게임 클리어 처리
                             if (c === clearX && r === clearY && gameClear === false) {
@@ -581,8 +560,6 @@ $(document).ready(function() {
             ctx.fill();
             ctx.closePath();
         }
-        
-        
     }
 
     // 게임 그리기 함수
@@ -650,4 +627,3 @@ $(document).ready(function() {
 
     // 게임 시작
     let gameStart = setInterval(drawGame, 10);
-});
