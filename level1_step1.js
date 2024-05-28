@@ -21,7 +21,9 @@ $(document).ready(function() {
 
     // 공 이미지 로드
     let ballImage = new Image();
-    ballImage.src = 'ball.jpeg'; // 공 이미지 경로
+    // ballImage.src = 'ball.jpeg'; // 공 이미지 경로
+    let ballImageSrc = sessionStorage.getItem('ballImage') || 'ball.jpeg';
+    ballImage.src = ballImageSrc;
 
     let clearBlockImage = new Image();
     let plainBlockImage = new Image();

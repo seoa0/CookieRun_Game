@@ -110,8 +110,9 @@ $(document).ready(function() {
         });
 
         function princessCookie(){ // 보너스타임을 더 오래 지속시켜준다.
+            sessionStorage.setItem('ballImage', 'heart.png'); // 일단 하트 모양으로 실험
             // level1
-            sessionStorage.getItem('bonustimeTime', '20000'); // 공주맛 쿠키 보너스타임 지속시간 두배
+            sessionStorage.setItem('bonustimeTime', '20000'); // 공주맛 쿠키 보너스타임 지속시간 두배
             sessionStorage.setItem('snowAbilityActive', 'false'); // 눈설탕 능력 비활성화   
             sessionStorage.setItem('wolfAbilityActive', 'false'); // 웨어울프 능력 비활성화
 
@@ -145,7 +146,7 @@ $(document).ready(function() {
 
         function snowCookie(){ // 하단에 얼음벽을 생성한다.
             // level1
-            sessionStorage.getItem('bonustimeTime', '10000'); // 공주맛 능력 비활성화
+            sessionStorage.setItem('bonustimeTime', '10000'); // 공주맛 능력 비활성화
             sessionStorage.setItem('snowAbilityActive', 'true'); // 눈설탕 능력 활성화   
             sessionStorage.setItem('wolfAbilityActive', 'false'); // 웨어울프 능력 비활성화
 
