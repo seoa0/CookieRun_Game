@@ -1,0 +1,56 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 800px;
+    height: 700px;
+    margin: 30px auto 0; 
+    transition: opacity 0.5s ease;
+    background-color: #D8AE7E;
+}
+
+
+
+.main {
+    width: 600px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    
+}
+
+.back-button {
+    position: absolute; 
+    width: 70px;
+    height: 70px;
+    border: none;
+    background-size: cover; 
+    background-color: transparent;
+    background-image: url('back_button.png'); 
+    transition: transform 0.2s ease;
+    left: -70px; 
+    top: 25px; 
+    z-index: 1; 
+}
+
+
+
+.cookie-images {
+    position: absolute;
+    bottom: 30px; 
+    right: -90px; 
+    z-index: 1; 
+}
+
+.cookie-img {
+    display: none; 
+}
+
+.cookie-img.active {
+    display: block; 
+    animation: fadeInOut 1s infinite; 
+}

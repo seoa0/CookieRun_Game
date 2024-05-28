@@ -4,20 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CookieRun_rule</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="rule.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="main.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('body').addClass('fade-in');
+
+            function goToPage(url) {
+                $('body').addClass('fade-out');
+                setTimeout(function() {
+                    window.location.href = url; 
+                }, 500); 
+            }
+            $('.back-button').click(function() {
+                goToPage('main.html'); 
+            });
+
+
+            var images = $('.cookie-img'); 
+            var index = 0;
+
+            function toggleImages() {
+                images.removeClass('active'); 
+                images.eq(index).addClass('active'); 
+                index = (index + 1) % images.length; 
+            }
+
+            setInterval(toggleImages, 500); 
+        });
+    </script>
 </head>
 <body>
     <section id="page-wrapper">
-        <header>Header</header>
+        <header>
+        </header>
         <div class="container">
-            <div class="left">Left</div>
+            <div class="left"></div>
             <div class="main">
+                <button class="back-button"></button>
+                <img src="rule.png" width="800px">
+                <div class="cookie-images">
+                    <img src="ck1.png" width='170px' class="cookie-img" alt="Cookie 1">
+                    <img src="ck2.png" width='170px' class="cookie-img" alt="Cookie 2">
+                </div>
             </div>
-            <div class="right">Right</div>
+            <div class="right"></div>
         </div>
-        <footer>Footer</footer>
+        <footer>
+        </footer>
     </section>
 </body>
 </html>
