@@ -20,6 +20,8 @@ $(document).ready(function() {
        createPopup('level1_step1.html', 'level1_choice.png');
     });
 
+    
+
     // 팝업 블록 생성 함수
     function createPopup(pageUrl, backgroundImageUrl) {
 
@@ -70,6 +72,30 @@ $(document).ready(function() {
             justifyContent: 'space-around', // 가로 방향으로 공간을 균등하게 분배
             //alignItems: 'center' // 세로 방향으로 가운데 정렬
         });
+
+        //용감한 쿠키
+        function braveCookie(){ // 기본 쿠키
+            // level1
+            sessionStorage.getItem('bonustimeTime', '10000'); // 공주맛 능력 초기화
+            sessionStorage.setItem('snowAbilityActive', 'false'); // 눈설탕 능력 비활성화   
+            sessionStorage.setItem('wolfAbilityActive', 'false'); // 웨어울프 능력 비활성화
+
+            // level2
+            sessionStorage.setItem('jungleAbilityActive', 'false'); // 정글전사맛 쿠키 비활성화
+            sessionStorage.setItem('paddleWidth', '100'); // 라임맛 쿠키 패들 길이 초기화
+            sessionStorage.setItem('devilAbilityActive', 'false'); // 악마맛 쿠키 비활성화
+
+            // level3
+            sessionStorage.setItem('ballRadius', 10); // 마법사맛 쿠키 공 반지름 초기화
+            //예언자맛 쿠키
+            sessionStorage.setItem('dx', '2');
+            sessionStorage.setItem('dy', '-2'); // 연금술사맛 쿠키 공 속도 초기화
+
+            //level4
+            //마카롱맛 쿠키
+            sessionStorage.setItem('hearts', '3'); // 우유푸딩맛 쿠키 하트 갯수 초기화
+            sessionStorage.setItem('paddleSpeed', 5); // 팬케이크맛 쿠키 패들 이동속도 초기화
+        }
 
         // 쿠키변경 버튼 추가
         // 공주맛 쿠키
@@ -329,7 +355,11 @@ $(document).ready(function() {
                 $(this).css('transform', 'scale(1)'); 
             });
 
+            
+
             button.click(function() {
+                if(princessClicked == false && snowClicked == false && wolfClicked && false)
+                    braveCookie();
                 goToPage(pageUrl);
             });
 
