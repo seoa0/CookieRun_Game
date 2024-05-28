@@ -252,6 +252,10 @@ $(document).ready(function() {
     // 공주맛 쿠키는 보너스 타임 두배
     bonustimeTime = parseFloat(sessionStorage.getItem('bonustimeTime'));
 
+    //스테이지 단계 표시
+    let currentStep = 1;
+    let nextPageUrl;
+    
     // 공과 블록 간의 충돌 감지
     var bonusgame;
     function collisionDetection() {
@@ -295,9 +299,17 @@ $(document).ready(function() {
             // 만약 클리어 블록을 깼다면 게임 클리어 처리
             if (block.isClear && gameClear === false) {
                 gameClear = true;
-                alert("GAME CLEAR!");
-                clearInterval(gameStart);
-                goToPage('level1_step2.html');
+                currentStep = currentStep + 1;
+                if(currentStep != 7){
+                    nextPageUrl = "level1_step" + currentStep + ".html";
+                    clearInterval(gameStart);
+                    createPopup(nextPageUrl, 'clear1.png');//수정수정
+                }
+                else{
+                    nextpageUrl = "level1.html";
+                    clearInterval(gameStart);
+                    createPopup(nextPageUrl, 'clear1.png');
+                }
             }
     
             // 만약 보너스타임 블록을 깼다면 보너스타임 화면을 표시하고, 10초 후에 감추고 공을 5개로 증가시킴
@@ -314,20 +326,25 @@ $(document).ready(function() {
         }
     }
     
+    let ballRadius = 10;
+    ballRadius = parseFloat(sessionStorage.getItem('ballRadius'));
+
+    // 패들 이동 속도
+    let paddleSpeed = 5;
+    paddleSpeed = parseFloat(sessionStorage.getItem('paddleSpeed'));
     
     
     //보너스 공 5개 만들기
     var balls = [];
-    var ballnumber = 5;   
+    var ballnumber = 3;   
     for(var i =0; i < ballnumber; i++){
         balls.push({
            bonusX : canvas.width / 2,
            bonusY : canvas.height - paddleHeight - 70,
-           bonusDx : 2,
-           bonusDy : -2,
+           bonusDx : parseFloat(sessionStorage.getItem('dx')),
+           bonusDy : parseFloat(sessionStorage.getItem('dy')),
            bonusBallImage : ballImage,
-           bonusWidth : 40,
-            bonusHeight : 40 
+           bonusballRadius : ballRadius
         });
     }
     var bonuspaddleX = (canvas.width / 2) - (paddleWidth / 2);
@@ -337,7 +354,7 @@ $(document).ready(function() {
     function drawBonusBalls() {
         //보너스 공 5개 그리기
         balls.forEach(function(ball) {
-            ctx.drawImage(ball.bonusBallImage, ball.bonusX - 10, ball.bonusY - 10, 40, 40);
+            ctx.drawImage(ball.bonusBallImage, ball.bonusX - ball.bonusballRadius, ball.bonusY - ball.bonusballRadius, ball.bonusballRadius * 2, ball.bonusballRadius * 2);
         });
     }
 
@@ -350,15 +367,7 @@ $(document).ready(function() {
 
             if (ball.bonusX + ball.bonusDx > canvas.width - 30 || ball.bonusX + ball.bonusDx < 10) {ball.bonusDx = -ball.bonusDx;}
             if (ball.bonusY + ball.bonusDy > canvas.height - 10 || ball.bonusY + ball.bonusDy < 10) {ball.bonusDy = -ball.bonusDy;}
-            
-            if (ball.bonusY + 10 >= canvas.height) {
-                ball.bonusX = 10;
-                ball.bonusY = 10;
-                ball.bonusDX = 0;
-                ball.bonusDy = 0;
-                ball.bonusWidth = 0;
-                ball.bonusHeight = 0;
-            }
+           
         });
     }
 
@@ -381,11 +390,20 @@ $(document).ready(function() {
                             // 만약 클리어 블록을 깼다면 게임 클리어 처리
                             if (c === clearX && r === clearY && gameClear === false) {
                                 gameClear = true;
-                                clearInterval(bonusgame);
-                                clearInterval(gameStart);
-                                //팝업창 개설 -> 게임 오버 OR 게임 클리어 출력 + 아래에 확인 버튼 생성
-                                //->확인 버튼에서 click 이벤트 발생할 경우 goToPage(~); 실행
-                                createPopup('level1.html', 'level1_choice.png');
+                                currentStep = currentStep + 1;
+                                if(currentStep != 7){
+                                    nextPageUrl = "level1_step" + currentStep + ".html";
+                                    console.log(nextPageUrl);
+                                    clearInterval(bonusgame);
+                                    clearInterval(gameStart);
+                                    createPopup(nextPageUrl, 'clear1.png');//수정수정
+                                }
+                                else{
+                                    nextPageUrl = "level1.html";
+                                    clearInterval(bonusgame);
+                                    clearInterval(gameStart);
+                                    createPopup(nextPageUrl, 'clear1.png');
+                                }
                             }
                         }
                     }
@@ -397,9 +415,38 @@ $(document).ready(function() {
     // 패들과 충돌처리
     function bonusCollisionPaddle() {
         balls.forEach(function(ball) {
-            if (ball.bonusY + ball.bonusDy > canvas.height - paddleHeight - 70 && ball.bonusX > bonuspaddleX && ball.bonusX < bonuspaddleX + paddleWidth) {ball.bonusDy = -ball.bonusDy;}
+            if (ball.bonusY + ball.bonusDy > canvas.height - paddleHeight - 20) {
+                if (ball.bonusX > bonuspaddleX && ball.bonusX < bonuspaddleX + paddleWidth) {
+                    ball.bonusDy = -ball.bonusDy;
+                    // 패들과의 충돌 위치에 따라 공의 이동 방향을 조정
+                    let collisionPoint = ball.bonusX - (bonuspaddleX + paddleWidth / 2);
+                    collisionPoint = collisionPoint / (paddleWidth / 2);
+                    let angle = collisionPoint * (Math.PI / 3); // 최대 60도 각도로 튕기기
+                    ball.bonusDx = 2 * parseFloat(sessionStorage.getItem('dx')) * Math.sin(angle);
+                    ball.bonusDy = 2 * parseFloat(sessionStorage.getItem('dy')) * Math.cos(angle);
+                }
+            }
         });
     }
+
+     // 패들 그리기 함수
+     function drawBonusPaddle() {
+        ctx.beginPath();
+        ctx.rect(bonuspaddleX, bonuspaddleY, paddleWidth, paddleHeight);
+        ctx.fillStyle = 'green';
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    // 패들 이동 함수
+    function movebonusPaddle() {
+        if (rightPressed && bonuspaddleX < canvas.width - paddleWidth) {
+            bonuspaddleX += paddleSpeed; // 패들 이동 속도를 증가시킴
+        } else if (leftPressed && bonuspaddleX > 0) {
+            bonuspaddleX -= paddleSpeed; // 패들 이동 속도를 증가시킴
+        }
+    }    
+
 
     // 공을 5개로 증가시키는 함수 (보너스타임)    
     function drawBonusGame() {
@@ -407,10 +454,10 @@ $(document).ready(function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // 패들 그리기
-        drawPaddle();
+        drawBonusPaddle();
 
         // 패들 이동
-        movePaddle();
+        movebonusPaddle();
 
         // 블록 그리기
         drawBlocks();
@@ -429,6 +476,18 @@ $(document).ready(function() {
 
         // 패들과 충돌처리
         bonusCollisionPaddle();
+
+        // 눈설탕맛 선택시 하단 벽 그리기
+            drawWalls();
+
+        // 눈설탕맛 벽 충돌처리
+            if(snowAbilityActive){
+                if (y + dy > canvas.height - paddleHeight - 20 -1) {
+                    if ((x > wallX1 && x < wallX1 + wallSize) || (x > wallX2 && x < wallX2 + wallSize)) {
+                        dy = -dy;
+                    }
+                }
+            }
     }   
 
     function createPopup(pageUrl, backgroundImageUrl) {
@@ -449,22 +508,6 @@ $(document).ready(function() {
             boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
             zIndex: '9999' // 요소 맨 위에 표시
         });
-        
-        // 게임 결과 이미지 보여주기 -> Game Clear OR Game Over
-        var gameresultImage = $('<div></div>');
-        var gameresulturl = gameClear ? 'url("wingameresult.png")' : 'url("losegameresult.png")';
-        gameresultImage.css({
-            width: '520px',
-            height: '210px',
-            border: 'none',
-            position: 'absolute', 
-            margin: '100px 40px 50px 40px',
-            ackgroundColor: 'transparent', 
-            backgroundImage: gameresulturl, 
-            backgroundSize: 'cover' 
-        });
-
-        popupBlock.append(gameresultImage);
 
         // 확인 버튼
         var cbutton = $('<button></button>');
@@ -477,7 +520,7 @@ $(document).ready(function() {
             border: 'none',
             transition: 'transform 0.2s ease',
             backgroundColor: 'transparent', 
-            backgroundImage: 'url("choice_button.png")',//변경 필요
+            backgroundImage: 'url("ok.png")',//변경 필요
             backgroundSize: 'cover' 
         });
         
@@ -537,7 +580,8 @@ $(document).ready(function() {
         clearInterval(gameStart);
         //팝업창 개설 -> 게임 오버 OR 게임 클리어 출력 + 아래에 확인 버튼 생성
         //->확인 버튼에서 click 이벤트 발생할 경우 goToPage(~); 실행
-        createPopup('level1.html', 'level1_choice.png');
+        sessionStorage.setItem("gameClear", gameClear);
+        createPopup('level1.html', 'gameover.png');
     }
 
     // 키보드 다운 이벤트 핸들러
@@ -558,9 +602,6 @@ $(document).ready(function() {
         }
     }
 
-    // 패들 이동 속도
-    let paddleSpeed = 5;
-    paddleSpeed = parseFloat(sessionStorage.getItem('paddleSpeed'));
     
     // 패들 이동 함수
     function movePaddle() {
@@ -570,10 +611,7 @@ $(document).ready(function() {
             paddleX -= paddleSpeed; // 패들 이동 속도를 증가시킴
         }
     }
-
-    let ballRadius = 10;
-    ballRadius = parseFloat(sessionStorage.getItem('ballRadius'));
-
+    
     // 공 이미지 그리기 함수
     function drawBall() {
         ctx.drawImage(ballImage, x - ballRadius, y - ballRadius, ballRadius*2, ballRadius*2); // 이미지 크기는 20x20, 이미지의 중심을 공의 중심으로 설정하기 위해 x-10, y-10
