@@ -351,7 +351,7 @@ $(document).ready(function() {
     }
 
     //공과 블록간의 충돌 감지
-    function  bonusCollisionDetection() {
+    function bonusCollisionDetection() {
         //보너스 공과 블록간의 충돌 감지
         balls.forEach(function(ball) {
             for (let c = 0; c < blockColumnCount; c++) {
@@ -362,7 +362,10 @@ $(document).ready(function() {
                         let blockY = block.y;
                         if (ball.bonusX > blockX && ball.bonusX < blockX + blockWidth && ball.bonusY > blockY && ball.bonusY < blockY + blockHeight) {
                             ball.bonusDy = -ball.bonusDy; // 충돌 시 공의 이동 방향 변경
-                            block.status = 0; // 충돌한 블록 제거
+                            block.remainingHits--;
+                            if(block.remainingHits <= 0){ // 충돌한 블록 제거
+                                block.status = 0;
+                            }
                             // 만약 클리어 블록을 깼다면 게임 클리어 처리
                             if (c === clearX && r === clearY && gameClear === false) {
                                 gameClear = true;
