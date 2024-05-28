@@ -26,8 +26,12 @@ $(document).ready(function() {
     let clearBlockImage = new Image();
     let plainBlockImage = new Image();
     let specialBlockImage = new Image();
+    let randomBlockImage = new Image(); // 새로운 이미지 추가
+    let hit1Image = new Image(); // 1번 맞은 블록 이미지
+    let hit2Image = new Image(); // 2번 맞은 블록 이미지
+    let hit3Image = new Image(); // 3번 맞은 블록 이미지
 
-    let totalImages = 3;
+    let totalImages = 7; // 이미지 개수 업데이트
     let loadedImages = 0;
 
     // 이미지가 로드되면 호출될 함수
@@ -42,13 +46,22 @@ $(document).ready(function() {
     clearBlockImage.onload = onLoadImage;
     plainBlockImage.onload = onLoadImage;
     specialBlockImage.onload = onLoadImage;
+    randomBlockImage.onload = onLoadImage; // 새로운 이미지 로드 핸들러 추가
+    hit1Image.onload = onLoadImage; // 새로운 이미지 로드 핸들러 추가
+    hit2Image.onload = onLoadImage; // 새로운 이미지 로드 핸들러 추가
+    hit3Image.onload = onLoadImage; // 새로운 이미지 로드 핸들러 추가
 
     // 이미지 소스 설정
     clearBlockImage.src = 'clear_block.png';
     plainBlockImage.src = 'block1.png';
     specialBlockImage.src = 'special_block.png';
+    randomBlockImage.src = 'random_block.png'; // 새로운 이미지 경로 설정
+    hit1Image.src = 'hit1_block.png'; // 새로운 이미지 경로 설정
+    hit2Image.src = 'hit2_block.png'; // 새로운 이미지 경로 설정
+    hit3Image.src = 'hit3_block.png'; // 새로운 이미지 경로 설정
 
     // 캔버스 요소와 그리기 컨텍스트 설정
+    let canvas = document.getElementById("myCanvas");
     let ctx = canvas.getContext('2d');
 
     // 캔버스 크기 설정
@@ -104,6 +117,16 @@ $(document).ready(function() {
         let randX = Math.floor(Math.random() * blockColumnCount);
         let randY = Math.floor(Math.random() * blockRowCount);
         if (!randomBlocks.some(block => block.x === randX && block.y === randY)) {
+            // 각 블록의 초기 값 설정
+            let initialHitValue;
+            if (randomBlocks.length < 3) {
+                initialHitValue = 3;
+            } else if (randomBlocks.length < 6) {
+                initialHitValue = 2;
+            } else {
+                initialHitValue = 1;
+            }
+            randomBlocks.push({ x: randX, y: randY, initialHitValue: initialHitValue });
         }
     }
 
@@ -114,6 +137,9 @@ $(document).ready(function() {
         for (let r = 0; r < blockRowCount; r++) {
             // 스페셜 블록 여부를 랜덤으로 결정
             let isSpecial = (c === specialBlockX && r === specialBlockY);
+            let randomBlock = randomBlocks.find(block => block.x === c && block.y === r);
+            let isRandomBlock = !!randomBlock;
+            blocks[c][r] = { x: 0, y: 0, status: 1, isSpecial: isSpecial, remainingHits: randomBlock ? randomBlock.initialHitValue : 1, isRandom: isRandomBlock }; // 각 블록의 초기 상태
         }
     }
 
@@ -172,6 +198,21 @@ $(document).ready(function() {
                         ctx.drawImage(clearBlockImage, blockX, blockY, blockWidth, blockHeight); // 클리어 블록
                     } else if (blocks[c][r].isSpecial) {
                         ctx.drawImage(specialBlockImage, blockX, blockY, blockWidth, blockHeight); // 보너스타임 블록
+                    } else if (blocks[c][r].isRandom) {
+                        switch (blocks[c][r].remainingHits) {
+                            case 3:
+                                ctx.drawImage(randomBlockImage, blockX, blockY, blockWidth, blockHeight); // 랜덤 블록
+                                break;
+                            case 2:
+                                ctx.drawImage(hit1Image, blockX, blockY, blockWidth, blockHeight); // 1번 맞은 블록
+                                break;
+                            case 1:
+                                ctx.drawImage(hit2Image, blockX, blockY, blockWidth, blockHeight); // 2번 맞은 블록
+                                break;
+                            default:
+                                ctx.drawImage(hit3Image, blockX, blockY, blockWidth, blockHeight); // 3번 맞은 블록
+                                break;
+                        }
                     } else {
                         ctx.drawImage(plainBlockImage, blockX, blockY, blockWidth, blockHeight); // 일반 블록
                     }
@@ -199,16 +240,25 @@ $(document).ready(function() {
                     if(jungleAbilityActive){ // 정글전사맛 쿠키 선택시 양 옆의 블록도 데미지
                         if (x > blockX - blockWidth && x < blockX + 2 * blockWidth && y > blockY && y < blockY + blockHeight) {
                             dy = -dy; // 충돌 시 공의 이동 방향 변경
+                            block.remainingHits--; // 충돌 시 값 감소
+                            if (block.remainingHits <= 0) {
+                                block.status = 0; // 값이 0이 되면 블록 제거
                             }
                             // 만약 클리어 블록을 깼다면 게임 클리어 처리
                             if (c === clearX && r === clearY && gameClear === false) {
                                 gameClear = true;
+<<<<<<< Updated upstream
                                 // alert("GAME CLEAR!");
                                 // document.location.reload();
                                 clearInterval(gameStart);
                                 //팝업창 개설 -> 게임 오버 OR 게임 클리어 출력 + 아래에 확인 버튼 생성
                                 //->확인 버튼에서 click 이벤트 발생할 경우 goToPage(~); 실행
                                 createPopup('level1.html', 'level1_choice.png');
+=======
+                                alert("GAME CLEAR!");
+                                clearInterval(gameStart);
+                                goToPage('level1_step2.html');
+>>>>>>> Stashed changes
                             }
                             // 만약 보너스타임 블록을 깼다면 보너스타임 화면을 표시하고, 10초 후에 감추고 공을 5개로 증가시킴
                             if (block.isSpecial) {
@@ -225,6 +275,9 @@ $(document).ready(function() {
                     else{ // 나머지 쿠키
                         if (x > blockX && x < blockX + blockWidth && y > blockY && y < blockY + blockHeight) {
                             dy = -dy; // 충돌 시 공의 이동 방향 변경
+                            block.remainingHits--; // 충돌 시 값 감소
+                            if (block.remainingHits <= 0) {
+                                block.status = 0; // 값이 0이 되면 블록 제거
                             }
                             // 만약 클리어 블록을 깼다면 게임 클리어 처리
                             if (c === clearX && r === clearY && gameClear === false) {
@@ -627,3 +680,4 @@ $(document).ready(function() {
 
     // 게임 시작
     let gameStart = setInterval(drawGame, 10);
+});
