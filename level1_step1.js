@@ -21,7 +21,9 @@ $(document).ready(function() {
 
     // 공 이미지 로드
     let ballImage = new Image();
-    ballImage.src = 'ball.jpeg'; // 공 이미지 경로
+    // ballImage.src = 'ball.jpeg'; // 공 이미지 경로
+    let ballImageSrc = sessionStorage.getItem('ballImage') || 'ball.jpeg';
+    ballImage.src = ballImageSrc;
 
     let clearBlockImage = new Image();
     let plainBlockImage = new Image();
@@ -111,6 +113,9 @@ $(document).ready(function() {
     let clearX = parseInt(blockColumnCount / 2);
     let clearY = parseInt(blockRowCount / 2);
 
+    // 마카롱맛 쿠키는 3번 맞아야 없어지는 블록 갯수 0개
+    let macaroonAbilityActive = sessionStorage.getItem('macaroonAbilityActive') === 'true';
+
     // 임의의 8개 블록 선택
     let randomBlocks = [];
     while (randomBlocks.length < 8) {
@@ -119,12 +124,23 @@ $(document).ready(function() {
         if (!randomBlocks.some(block => block.x === randX && block.y === randY)) {
             // 각 블록의 초기 값 설정
             let initialHitValue;
-            if (randomBlocks.length < 3) {
-                initialHitValue = 3;
-            } else if (randomBlocks.length < 6) {
-                initialHitValue = 2;
-            } else {
-                initialHitValue = 1;
+            if(macaroonAbilityActive){
+                if (randomBlocks.length < 0) {
+                    initialHitValue = 3;
+                } else if (randomBlocks.length < 0) {
+                    initialHitValue = 2;
+                } else {
+                    initialHitValue = 1;
+                }
+            }
+            else{
+                if (randomBlocks.length < 3) {
+                    initialHitValue = 3;
+                } else if (randomBlocks.length < 6) {
+                    initialHitValue = 2;
+                } else {
+                    initialHitValue = 1;
+                }
             }
             randomBlocks.push({ x: randX, y: randY, initialHitValue: initialHitValue });
         }
