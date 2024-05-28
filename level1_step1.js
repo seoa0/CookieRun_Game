@@ -55,12 +55,12 @@ $(document).ready(function() {
 
     // 이미지 소스 설정
     clearBlockImage.src = 'clear_block.png';
-    plainBlockImage.src = 'block1.png';
+    plainBlockImage.src = 'block_yellow.png';
     specialBlockImage.src = 'special_block.png';
-    randomBlockImage.src = 'heart.png'; // 새로운 이미지 경로 설정
-    hit1Image.src = 'heart.png'; // 새로운 이미지 경로 설정
-    hit2Image.src = 'heart.png'; // 새로운 이미지 경로 설정
-    hit3Image.src = 'heart.png'; // 새로운 이미지 경로 설정
+    randomBlockImage.src = 'block_blue.png'; // 새로운 이미지 경로 설정
+    hit1Image.src = 'block_blue.png'; // 새로운 이미지 경로 설정
+    hit2Image.src = 'block_red.png'; // 새로운 이미지 경로 설정
+    hit3Image.src = 'block_yellow.png'; // 새로운 이미지 경로 설정
 
     // 캔버스 요소와 그리기 컨텍스트 설정
     let canvas = document.getElementById("myCanvars");
@@ -129,20 +129,16 @@ $(document).ready(function() {
                     initialHitValue = 3;
                 } else if (randomBlocks.length < 0) {
                     initialHitValue = 2;
-                } else {
-                    initialHitValue = 1;
-                }
             }
+        }
             else{
-                if (randomBlocks.length < 3) {
+                if (randomBlocks.length < 4) {
                     initialHitValue = 3;
-                } else if (randomBlocks.length < 6) {
+                } else if (randomBlocks.length < 8) {
                     initialHitValue = 2;
-                } else {
-                    initialHitValue = 1;
-                }
             }
             randomBlocks.push({ x: randX, y: randY, initialHitValue: initialHitValue });
+        }
         }
     }
 
@@ -152,7 +148,7 @@ $(document).ready(function() {
         blocks[c] = [];
         for (let r = 0; r < blockRowCount; r++) {
             // 스페셜 블록 여부를 랜덤으로 결정
-            let isClear = (c == clearX && r == clearY);
+            let isClear = (c === clearX && r === clearY);
             let isSpecial = (c === specialBlockX && r === specialBlockY);
             let randomBlock = randomBlocks.find(block => block.x === c && block.y === r);
             let isRandomBlock = !!randomBlock;
@@ -218,13 +214,13 @@ $(document).ready(function() {
                     } else if (blocks[c][r].isRandom) {
                         switch (blocks[c][r].remainingHits) {
                             case 3:
-                                ctx.drawImage(randomBlockImage, blockX, blockY, blockWidth, blockHeight); // 랜덤 블록
+                                ctx.drawImage(hit1Image, blockX, blockY, blockWidth, blockHeight); // 랜덤 블록
                                 break;
                             case 2:
-                                ctx.drawImage(hit1Image, blockX, blockY, blockWidth, blockHeight); // 1번 맞은 블록
+                                ctx.drawImage(hit2Image, blockX, blockY, blockWidth, blockHeight); // 1번 맞은 블록
                                 break;
                             case 1:
-                                ctx.drawImage(hit2Image, blockX, blockY, blockWidth, blockHeight); // 2번 맞은 블록
+                                ctx.drawImage(hit3Image, blockX, blockY, blockWidth, blockHeight); // 2번 맞은 블록
                                 break;
                             default:
                                 ctx.drawImage(hit3Image, blockX, blockY, blockWidth, blockHeight); // 3번 맞은 블록
