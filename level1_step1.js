@@ -113,6 +113,8 @@ $(document).ready(function() {
     let clearX = parseInt(blockColumnCount / 2);
     let clearY = parseInt(blockRowCount / 2);
 
+    let score = 0;
+
     // 마카롱맛 쿠키는 3번 맞아야 없어지는 블록 갯수 0개
     let macaroonAbilityActive = sessionStorage.getItem('macaroonAbilityActive') === 'true';
 
@@ -189,6 +191,13 @@ $(document).ready(function() {
         for (let block of deleteBlocks) {
             blocks[block.x][block.y].status = 0;
         }
+    }
+    
+    // 점수 그리기 함수
+    function drawScore() {
+        ctx.font = '16px Arial';
+        ctx.fillStyle = '#0095DD';
+        ctx.fillText('Score: ' + score, 8, 20);
     }
     
     // 블록 그리기 함수
@@ -280,6 +289,8 @@ $(document).ready(function() {
         block.remainingHits--; // 충돌 시 값 감소
         if (block.remainingHits <= 0) {
             block.status = 0; // 값이 0이 되면 블록 제거
+            score += 10; // 블록이 깨질 때마다 10점 추가
+            drawScore(); // 점수를 업데이트하여 화면에 표시
     
             // 만약 클리어 블록을 깼다면 게임 클리어 처리
             if (block.isClear && gameClear === false) {
@@ -302,6 +313,7 @@ $(document).ready(function() {
             }
         }
     }
+    
     
     
     //보너스 공 5개 만들기
@@ -603,28 +615,31 @@ $(document).ready(function() {
     function drawGame() {
         // 캔버스 초기화
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    
         // 공 그리기
         drawBall();
-
+    
         // 패들 이동
         movePaddle();
-
+    
         // 패들 그리기
         drawPaddle();
-
+    
         // 눈설탕맛 선택시 하단 벽 그리기
         drawWalls();
-
+    
         // 블록 그리기
         drawBlocks();
-
+    
         // 생명 그리기
         drawHearts();
-
+    
+        // 점수 그리기
+        drawScore();
+    
         // 충돌 감지
         collisionDetection();
-
+    
         // 공의 경계처리
         if (x + dx > canvas.width - 10 || x + dx < 10) {
             dx = -dx;
@@ -632,7 +647,7 @@ $(document).ready(function() {
         if (y + dy < 10) {
             dy = -dy;
         }
-
+    
         // 패들과 충돌처리
         if (y + dy > canvas.height - paddleHeight - 20) {
             if (x > paddleX && x < paddleX + paddleWidth) {
@@ -647,7 +662,7 @@ $(document).ready(function() {
                 heartLost(); // 공이 바닥에 닿으면 생명 감소
             }
         }
-
+    
         // 눈설탕맛 벽 충돌처리
         if(snowAbilityActive){
             if (y + dy > canvas.height - paddleHeight - 20 -1) {
@@ -656,12 +671,12 @@ $(document).ready(function() {
                 }
             }
         }
-
+    
         // 공 이동
         x += dx;
         y += dy;
     }
-
+    
     // 게임 시작
     let gameStart = setInterval(drawGame, 10);
 });

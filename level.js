@@ -1,4 +1,5 @@
 $(document).ready(function() {
+
     $('body').addClass('fade-in');
 
     $('.back-button').click(function() {
