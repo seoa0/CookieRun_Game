@@ -358,7 +358,7 @@ $(document).ready(function() {
             
 
             button.click(function() {
-                if(princessClicked == false && snowClicked == false && wolfClicked && false)
+                if(princessClicked == false && snowClicked == false && wolfClicked == false)
                     braveCookie();
                 goToPage(pageUrl);
             });
