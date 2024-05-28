@@ -695,4 +695,4 @@ $(document).ready(function() {
 
     // 게임 시작
     let gameStart = setInterval(drawGame, 10);
-});
+});  
