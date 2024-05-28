@@ -98,3 +98,30 @@ footer {
 .start-button:hover, .rules-button:hover {
     transform: scale(1.1);
 }
+
+/* 異붽� */
+#skip-button {
+    position: absolute;
+    top: 115px;
+    right: 4px;
+    background: none;
+    border: none;
+}
+#intro-wrapper {
+    position: relative;
+}
+
+video {
+    border: 5px solid white;
+    margin: 100px auto 0; 
+    display: block;
+    position: relative; 
+}
+
+#music-button {
+    position: absolute;
+    bottom: 60px;
+    right: 330px;
+    background: none;
+    border: none;
+}

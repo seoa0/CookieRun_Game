@@ -9,6 +9,12 @@
     <script src="main.js"></script>
 </head>
 <body>
+    <section id="intro-wrapper">
+        <video src="cookierun_intro.mp4" width="800px" autoplay muted></video>
+        <button id="skip-button">
+            <img src="skip.png" width="100px"alt="Skip">
+        </button>
+    </section>
     <section id="page-wrapper">
         <header></header> 
         <div class="container">
@@ -20,9 +26,13 @@
             </div>
             <div class="right"></div>
         </div>
+        <button id="music-button">
+            <img src="audio_off.png" width="70px"alt="audio">
+        </button>
         <footer>
             <img src="web_programming.png" width="300">
         </footer>
     </section>
+    <audio id="background-music" src="cookierun_music.mp3" loop></audio>
 </body>
 </html>
