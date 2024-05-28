@@ -158,7 +158,7 @@ $(document).ready(function() {
 
             // level3
             sessionStorage.setItem('ballRadius', 15); // 마법사맛 쿠키 공 반지름 1.5배
-            sessionStorage.setItem('prophetAbilityActive', 'false'); // 예언자맛 쿠키 비활성화
+            sessionStorage.setItem('prophetAbilityActive', 'true'); // 예언자맛 쿠키 비활성화
             sessionStorage.setItem('dx', '2');
             sessionStorage.setItem('dy', '-2'); // 연금술사맛 쿠키 공 속도 초기화
 
@@ -221,6 +221,7 @@ $(document).ready(function() {
         });
 
         cbutton1.click(function() {
+            wizardCookie();
             if (!princessClicked) {
                 princessClicked = true;
                 $(this).css('backgroundImage', 'url("princess2_cookie.png")');
@@ -247,6 +248,7 @@ $(document).ready(function() {
         });
 
         cbutton2.click(function() {
+            prophetCookie();
             if (!snowClicked) {
                 snowClicked = true;
                 $(this).css('backgroundImage', 'url("snow2_cookie.png")');
@@ -272,6 +274,7 @@ $(document).ready(function() {
         });
 
         cbutton3.click(function() {
+            alchemistCookie();
             if (!wolfClicked) {
                 wolfClicked = true;
                 $(this).css('backgroundImage', 'url("wolf2_cookie.png")');
@@ -370,6 +373,8 @@ $(document).ready(function() {
             });
 
             button.click(function() {
+                if(princessClicked == false && snowClicked == false && wolfClicked == false)
+                    braveCookie();
                 goToPage(pageUrl);
             });
 

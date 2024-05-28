@@ -194,7 +194,7 @@ $(document).ready(function() {
 
             // level3
             sessionStorage.setItem('ballRadius', 10); // 마법사맛 쿠키 공 반지름 초기화
-            //예언자맛 쿠키
+            sessionStorage.setItem('prophetAbilityActive', 'false'); // 예언자맛 쿠키 비활성화
             sessionStorage.setItem('dx', '2');
             sessionStorage.setItem('dy', '-2'); // 연금술사맛 쿠키 공 속도 초기화
 
