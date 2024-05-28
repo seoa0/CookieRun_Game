@@ -127,7 +127,7 @@ $(document).ready(function() {
             sessionStorage.setItem('dy', '-2'); // 연금술사맛 쿠키 공 속도 초기화
 
             //level4
-            //마카롱맛 쿠키
+            sessionStorage.setItem('macaroonAbilityActive', 'true'); // 마카롱맛 쿠키
             sessionStorage.setItem('hearts', '3'); // 우유푸딩맛 쿠키 하트 갯수 초기화
             sessionStorage.setItem('paddleSpeed', 5); // 팬케이크맛 쿠키 패들 이동속도 초기화
         }
@@ -161,7 +161,7 @@ $(document).ready(function() {
             sessionStorage.setItem('dy', '-2'); // 연금술사맛 쿠키 공 속도 초기화
 
             //level4
-            //마카롱맛 쿠키
+            sessionStorage.setItem('macaroonAbilityActive', 'false'); // 마카롱맛 쿠키
             sessionStorage.setItem('hearts', '3'); // 우유푸딩맛 쿠키 하트 갯수 초기화
             sessionStorage.setItem('paddleSpeed', 5); // 팬케이크맛 쿠키 패들 이동속도 초기화
         }
