@@ -110,7 +110,7 @@ $(document).ready(function() {
         });
 
         function jungleCookie(){ // 주변 블록이 같이 제거된다.
-            sessionStorage.setItem('ballImage', 'image6.png'); // 공 이미지 변경
+            sessionStorage.setItem('ballImage', 'image 6.png'); // 공 이미지 변경
             // level1
             sessionStorage.setItem('bonustimeTime', '10000'); // 공주맛 능력 비활성화
             sessionStorage.setItem('snowAbilityActive', 'false'); // 눈설탕 능력 활성화   
@@ -145,7 +145,7 @@ $(document).ready(function() {
         });
 
         function limeCookie(){ // 패들의 길이가 길어진다.
-            sessionStorage.setItem('ballImage', 'image17.png'); // 공 이미지 변경
+            sessionStorage.setItem('ballImage', 'image 17.png'); // 공 이미지 변경
             // level1
             sessionStorage.setItem('bonustimeTime', '10000'); // 공주맛 능력 비활성화
             sessionStorage.setItem('snowAbilityActive', 'false'); // 눈설탕 능력 활성화   
@@ -180,7 +180,7 @@ $(document).ready(function() {
         });
 
         function devilCookie(){ // 일부 블럭이 사라진다. 랜덤 블록 8개 삭제
-            sessionStorage.setItem('ballImage', 'image1.png'); // 공 이미지 변경
+            sessionStorage.setItem('ballImage', 'image 1.png'); // 공 이미지 변경
             // level1
             sessionStorage.setItem('bonustimeTime', '10000'); // 공주맛 능력 비활성화
             sessionStorage.setItem('snowAbilityActive', 'false'); // 눈설탕 능력 활성화   

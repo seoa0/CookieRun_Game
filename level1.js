@@ -146,7 +146,7 @@ $(document).ready(function() {
         });
 
         function snowCookie(){ // 하단에 얼음벽을 생성한다.
-            sessionStorage.setItem('ballImage', 'image19.png'); // 공 이미지 변경
+            sessionStorage.setItem('ballImage', 'image 19.png'); // 공 이미지 변경
             // level1
             sessionStorage.setItem('bonustimeTime', '10000'); // 공주맛 능력 비활성화
             sessionStorage.setItem('snowAbilityActive', 'true'); // 눈설탕 능력 활성화   
@@ -181,7 +181,7 @@ $(document).ready(function() {
         });
 
         function wolfCookie(){ // 일정확률로 떨어진 공을 부활시킨다.
-            sessionStorage.setItem('ballImage', 'image5.png'); // 공 이미지 변경
+            sessionStorage.setItem('ballImage', 'image 5.png'); // 공 이미지 변경
             // level1
             sessionStorage.setItem('bonustimeTime', '10000'); // 공주맛 능력 비활성화
             sessionStorage.setItem('snowAbilityActive', 'false'); // 눈설탕 능력 비활성화   

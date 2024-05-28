@@ -110,7 +110,7 @@ $(document).ready(function() {
         });
 
         function wizardCookie(){ // 공의 크기가 커진다.
-            sessionStorage.setItem('ballImage', 'image25.png'); // 공 이미지 변경
+            sessionStorage.setItem('ballImage', 'image 25.png'); // 공 이미지 변경
             // level1
             sessionStorage.getItem('bonustimeTime', '10000'); // 공주맛 능력 초기화
             sessionStorage.setItem('snowAbilityActive', 'false'); // 눈설탕 능력 비활성화   
@@ -145,7 +145,7 @@ $(document).ready(function() {
         });
 
         function prophetCookie(){ // 보너스타임 3개.
-            sessionStorage.setItem('ballImage', 'image23.png'); // 공 이미지 변경
+            sessionStorage.setItem('ballImage', 'image 23.png'); // 공 이미지 변경
             // level1
             sessionStorage.getItem('bonustimeTime', '10000'); // 공주맛 능력 초기화
             sessionStorage.setItem('snowAbilityActive', 'false'); // 눈설탕 능력 비활성화   
@@ -180,7 +180,7 @@ $(document).ready(function() {
         });
 
         function alchemistCookie(){ // 공의 속도가 느려진다.
-            sessionStorage.setItem('ballImage', 'image18.png'); // 공 이미지 변경
+            sessionStorage.setItem('ballImage', 'image 18.png'); // 공 이미지 변경
             // level1
             sessionStorage.getItem('bonustimeTime', '10000'); // 공주맛 능력 초기화
             sessionStorage.setItem('snowAbilityActive', 'false'); // 눈설탕 능력 비활성화   
