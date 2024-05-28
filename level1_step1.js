@@ -113,6 +113,8 @@ $(document).ready(function() {
     let clearX = parseInt(blockColumnCount / 2);
     let clearY = parseInt(blockRowCount / 2);
 
+    let score = 0;
+
     // 마카롱맛 쿠키는 3번 맞아야 없어지는 블록 갯수 0개
     let macaroonAbilityActive = sessionStorage.getItem('macaroonAbilityActive') === 'true';
 
@@ -191,6 +193,13 @@ $(document).ready(function() {
         }
     }
     
+    // 점수 그리기 함수
+    function drawScore() {
+        ctx.font = '16px Arial';
+        ctx.fillStyle = '#0095DD';
+        ctx.fillText('Score: ' + score, 8, 20);
+    }
+    
     // 블록 그리기 함수
     function drawBlocks() {
         if (devilAbilityActive) {
@@ -246,7 +255,7 @@ $(document).ready(function() {
     //스테이지 단계 표시
     let currentStep = 1;
     let nextPageUrl;
-
+    
     // 공과 블록 간의 충돌 감지
     var bonusgame;
     function collisionDetection() {
@@ -284,6 +293,8 @@ $(document).ready(function() {
         block.remainingHits--; // 충돌 시 값 감소
         if (block.remainingHits <= 0) {
             block.status = 0; // 값이 0이 되면 블록 제거
+            score += 10; // 블록이 깨질 때마다 10점 추가
+            drawScore(); // 점수를 업데이트하여 화면에 표시
     
             // 만약 클리어 블록을 깼다면 게임 클리어 처리
             if (block.isClear && gameClear === false) {
@@ -322,6 +333,7 @@ $(document).ready(function() {
     let paddleSpeed = 5;
     paddleSpeed = parseFloat(sessionStorage.getItem('paddleSpeed'));
     
+    
     //보너스 공 5개 만들기
     var balls = [];
     var ballnumber = 3;   
@@ -332,7 +344,7 @@ $(document).ready(function() {
            bonusDx : parseFloat(sessionStorage.getItem('dx')),
            bonusDy : parseFloat(sessionStorage.getItem('dy')),
            bonusBallImage : ballImage,
-           bonusballRadius : ballRadius 
+           bonusballRadius : ballRadius
         });
     }
     var bonuspaddleX = (canvas.width / 2) - (paddleWidth / 2);
@@ -355,6 +367,7 @@ $(document).ready(function() {
 
             if (ball.bonusX + ball.bonusDx > canvas.width - 30 || ball.bonusX + ball.bonusDx < 10) {ball.bonusDx = -ball.bonusDx;}
             if (ball.bonusY + ball.bonusDy > canvas.height - 10 || ball.bonusY + ball.bonusDy < 10) {ball.bonusDy = -ball.bonusDy;}
+           
         });
     }
 
@@ -416,52 +429,53 @@ $(document).ready(function() {
         });
     }
 
-    // 패들 그리기 함수
-        function drawBonusPaddle() {
-            ctx.beginPath();
-            ctx.rect(bonuspaddleX, bonuspaddleY, paddleWidth, paddleHeight);
-            ctx.fillStyle = 'green';
-            ctx.fill();
-            ctx.closePath();
-        }
+     // 패들 그리기 함수
+     function drawBonusPaddle() {
+        ctx.beginPath();
+        ctx.rect(bonuspaddleX, bonuspaddleY, paddleWidth, paddleHeight);
+        ctx.fillStyle = 'green';
+        ctx.fill();
+        ctx.closePath();
+    }
 
     // 패들 이동 함수
-        function movebonusPaddle() {
-            if (rightPressed && bonuspaddleX < canvas.width - paddleWidth) {
-                bonuspaddleX += paddleSpeed; // 패들 이동 속도를 증가시킴
-            } else if (leftPressed && bonuspaddleX > 0) {
-                bonuspaddleX -= paddleSpeed; // 패들 이동 속도를 증가시킴
-            }
-        }    
+    function movebonusPaddle() {
+        if (rightPressed && bonuspaddleX < canvas.width - paddleWidth) {
+            bonuspaddleX += paddleSpeed; // 패들 이동 속도를 증가시킴
+        } else if (leftPressed && bonuspaddleX > 0) {
+            bonuspaddleX -= paddleSpeed; // 패들 이동 속도를 증가시킴
+        }
+    }    
+
 
     // 공을 5개로 증가시키는 함수 (보너스타임)    
     function drawBonusGame() {
         //초기화
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // 패들 그리기
-            drawBonusPaddle();
+        drawBonusPaddle();
 
         // 패들 이동
-            movebonusPaddle();
+        movebonusPaddle();
 
         // 블록 그리기
-            drawBlocks();
+        drawBlocks();
 
         // 생명 그리기
-            drawHearts();
+        drawHearts();
 
         //공 그리기
-            drawBonusBalls();
+        drawBonusBalls();
 
         //공 이동 + 경계 처리
-            bonusBallsMove();
+        bonusBallsMove();
 
         //공과 블록간의 충돌 감지
-            bonusCollisionDetection();
+        bonusCollisionDetection();
 
         // 패들과 충돌처리
-            bonusCollisionPaddle();
+        bonusCollisionPaddle();
 
         // 눈설탕맛 선택시 하단 벽 그리기
             drawWalls();
@@ -561,7 +575,11 @@ $(document).ready(function() {
 
     // 게임 오버 처리 함수
     function gameOver() {
+        // alert("GAME OVER");
+        // document.location.reload();
         clearInterval(gameStart);
+        //팝업창 개설 -> 게임 오버 OR 게임 클리어 출력 + 아래에 확인 버튼 생성
+        //->확인 버튼에서 click 이벤트 발생할 경우 goToPage(~); 실행
         sessionStorage.setItem("gameClear", gameClear);
         createPopup('level1.html', 'gameover.png');
     }
@@ -583,6 +601,7 @@ $(document).ready(function() {
             leftPressed = false;
         }
     }
+
     
     // 패들 이동 함수
     function movePaddle() {
@@ -592,7 +611,7 @@ $(document).ready(function() {
             paddleX -= paddleSpeed; // 패들 이동 속도를 증가시킴
         }
     }
-
+    
     // 공 이미지 그리기 함수
     function drawBall() {
         ctx.drawImage(ballImage, x - ballRadius, y - ballRadius, ballRadius*2, ballRadius*2); // 이미지 크기는 20x20, 이미지의 중심을 공의 중심으로 설정하기 위해 x-10, y-10
@@ -634,28 +653,31 @@ $(document).ready(function() {
     function drawGame() {
         // 캔버스 초기화
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
+    
         // 공 그리기
         drawBall();
-
+    
         // 패들 이동
         movePaddle();
-
+    
         // 패들 그리기
         drawPaddle();
-
+    
         // 눈설탕맛 선택시 하단 벽 그리기
         drawWalls();
-
+    
         // 블록 그리기
         drawBlocks();
-
+    
         // 생명 그리기
         drawHearts();
-
+    
+        // 점수 그리기
+        drawScore();
+    
         // 충돌 감지
         collisionDetection();
-
+    
         // 공의 경계처리
         if (x + dx > canvas.width - 10 || x + dx < 10) {
             dx = -dx;
@@ -663,7 +685,7 @@ $(document).ready(function() {
         if (y + dy < 10) {
             dy = -dy;
         }
-
+    
         // 패들과 충돌처리
         if (y + dy > canvas.height - paddleHeight - 20) {
             if (x > paddleX && x < paddleX + paddleWidth) {
@@ -678,7 +700,7 @@ $(document).ready(function() {
                 heartLost(); // 공이 바닥에 닿으면 생명 감소
             }
         }
-
+    
         // 눈설탕맛 벽 충돌처리
         if(snowAbilityActive){
             if (y + dy > canvas.height - paddleHeight - 20 -1) {
@@ -687,12 +709,12 @@ $(document).ready(function() {
                 }
             }
         }
-
+    
         // 공 이동
         x += dx;
         y += dy;
     }
-
+    
     // 게임 시작
     let gameStart = setInterval(drawGame, 10);
-});  
+});
