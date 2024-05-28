@@ -55,13 +55,13 @@ $(document).ready(function() {
     clearBlockImage.src = 'clear_block.png';
     plainBlockImage.src = 'block1.png';
     specialBlockImage.src = 'special_block.png';
-    randomBlockImage.src = 'random_block.png'; // 새로운 이미지 경로 설정
-    hit1Image.src = 'hit1_block.png'; // 새로운 이미지 경로 설정
-    hit2Image.src = 'hit2_block.png'; // 새로운 이미지 경로 설정
-    hit3Image.src = 'hit3_block.png'; // 새로운 이미지 경로 설정
+    randomBlockImage.src = 'heart.png'; // 새로운 이미지 경로 설정
+    hit1Image.src = 'heart.png'; // 새로운 이미지 경로 설정
+    hit2Image.src = 'heart.png'; // 새로운 이미지 경로 설정
+    hit3Image.src = 'heart.png'; // 새로운 이미지 경로 설정
 
     // 캔버스 요소와 그리기 컨텍스트 설정
-    let canvas = document.getElementById("myCanvas");
+    let canvas = document.getElementById("myCanvars");
     let ctx = canvas.getContext('2d');
 
     // 캔버스 크기 설정
