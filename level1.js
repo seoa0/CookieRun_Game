@@ -81,7 +81,7 @@ $(document).ready(function() {
             sessionStorage.setItem('wolfAbilityActive', 'false'); // 웨어울프 능력 비활성화
 
             // level2
-            sessionStorage.setItem('jungleAbilityActive', 'false'); // 정글전사맛 쿠키 비활성화
+            sessionStorage.setItem('jungleAbilityActive', 'true'); // 정글전사맛 쿠키 비활성화
             sessionStorage.setItem('paddleWidth', '100'); // 라임맛 쿠키 패들 길이 초기화
             sessionStorage.setItem('devilAbilityActive', 'false'); // 악마맛 쿠키 비활성화
 

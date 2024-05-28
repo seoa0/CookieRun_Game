@@ -136,11 +136,10 @@ $(document).ready(function() {
         blocks[c] = [];
         for (let r = 0; r < blockRowCount; r++) {
             // 스페셜 블록 여부를 랜덤으로 결정
-            let isClear = (c == clearX && r == clearY);
             let isSpecial = (c === specialBlockX && r === specialBlockY);
             let randomBlock = randomBlocks.find(block => block.x === c && block.y === r);
             let isRandomBlock = !!randomBlock;
-            blocks[c][r] = { x: 0, y: 0, status: 1, isSpecial: isSpecial, remainingHits: randomBlock ? randomBlock.initialHitValue : 1, isRandom: isRandomBlock , isClear: isClear}; // 각 블록의 초기 상태
+            blocks[c][r] = { x: 0, y: 0, status: 1, isSpecial: isSpecial, remainingHits: randomBlock ? randomBlock.initialHitValue : 1, isRandom: isRandomBlock }; // 각 블록의 초기 상태
         }
     }
 
@@ -239,19 +238,12 @@ $(document).ready(function() {
                     let blockX = block.x;
                     let blockY = block.y;
                     if(jungleAbilityActive){ // 정글전사맛 쿠키 선택시 양 옆의 블록도 데미지
-                        if (x > blockX && x < blockX + blockWidth && y > blockY && y < blockY + blockHeight) {
-                        dy = -dy; // 충돌 시 공의 이동 방향 변경
-                        block.remainingHits--; // 충돌 시 값 감소
-                        if (block.remainingHits <= 0) {
-                            block.status = 0; // 값이 0이 되면 블록 제거
-                            // 인접한 블록도 제거
-                            if (c > 0) {
-                                blocks[c - 1][r].status = 0; // 왼쪽 블록
+                        if (x > blockX - blockWidth && x < blockX + 2 * blockWidth && y > blockY && y < blockY + blockHeight) {
+                            dy = -dy; // 충돌 시 공의 이동 방향 변경
+                            block.remainingHits--; // 충돌 시 값 감소
+                            if (block.remainingHits <= 0) {
+                                block.status = 0; // 값이 0이 되면 블록 제거
                             }
-                            if (c < blockColumnCount - 1) {
-                                blocks[c + 1][r].status = 0; // 오른쪽 블록
-                            }
-                        }
                             // 만약 클리어 블록을 깼다면 게임 클리어 처리
                             if (c === clearX && r === clearY && gameClear === false) {
                                 gameClear = true;
