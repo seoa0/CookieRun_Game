@@ -247,18 +247,9 @@ $(document).ready(function() {
                             // 만약 클리어 블록을 깼다면 게임 클리어 처리
                             if (c === clearX && r === clearY && gameClear === false) {
                                 gameClear = true;
-<<<<<<< Updated upstream
-                                // alert("GAME CLEAR!");
-                                // document.location.reload();
-                                clearInterval(gameStart);
-                                //팝업창 개설 -> 게임 오버 OR 게임 클리어 출력 + 아래에 확인 버튼 생성
-                                //->확인 버튼에서 click 이벤트 발생할 경우 goToPage(~); 실행
-                                createPopup('level1.html', 'level1_choice.png');
-=======
                                 alert("GAME CLEAR!");
                                 clearInterval(gameStart);
                                 goToPage('level1_step2.html');
->>>>>>> Stashed changes
                             }
                             // 만약 보너스타임 블록을 깼다면 보너스타임 화면을 표시하고, 10초 후에 감추고 공을 5개로 증가시킴
                             if (block.isSpecial) {
