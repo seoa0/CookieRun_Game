@@ -111,11 +111,11 @@ $(document).ready(function() {
 
     let score = 0;
 
-    // 랜덤으로 보너스타임 블록 선택                                             // 수정!!
+    // 랜덤으로 보너스타임 블록 선택                                             
     let specialBlocks = [];
     let prophetAbilityActive = sessionStorage.getItem('prophetAbilityActive') === 'true'; // 예언자맛 쿠키 
 
-    function getRandomBlock(exclude) {                                      // 추가!!
+    function getRandomBlock(exclude) {                                     
         let block;
         do {
             block = {
@@ -267,7 +267,9 @@ $(document).ready(function() {
 
     //스테이지 단계 표시
     let currentStep = 1;
+    let pngStep = 1;//수정 발생, level2에서는 pngStep = 7, level 3에서는 pngStep = 13 ...
     let nextPageUrl;
+    let nextImageUrl;//수정 발생
     
     // 공과 블록 간의 충돌 감지
     var bonusgame;
@@ -315,11 +317,13 @@ $(document).ready(function() {
                 currentStep = currentStep + 1;
                 if(currentStep != 7){
                     nextPageUrl = "level1_step" + currentStep + ".html";
+                    pngStep = pngStep + 1;//수정 발생
+                    nextImageUrl = pngStep + ".png";//수정 발생
                     clearInterval(gameStart);
-                    createPopup(nextPageUrl, 'clear1.png');//수정수정
+                    createPopup(nextPageUrl, nextImageUrl);//수정 발생
                 }
                 else{
-                    nextpageUrl = "level1.html";
+                    nextPageUrl = "level1.html";//수정 발생 (소문자 p -> 대문자 P)
                     clearInterval(gameStart);
                     createPopup(nextPageUrl, 'clear1.png');
                 }
@@ -407,9 +411,11 @@ $(document).ready(function() {
                                 if(currentStep != 7){
                                     nextPageUrl = "level1_step" + currentStep + ".html";
                                     console.log(nextPageUrl);
+                                    pngStep = pngStep + 1;//수정 발생
+                                    nextImageUrl = pngStep + ".png";//수정 발생
                                     clearInterval(bonusgame);
                                     clearInterval(gameStart);
-                                    createPopup(nextPageUrl, 'clear1.png');//수정수정
+                                    createPopup(nextPageUrl, nextImageUrl);//수정 발생
                                 }
                                 else{
                                     nextPageUrl = "level1.html";
@@ -533,7 +539,7 @@ $(document).ready(function() {
             border: 'none',
             transition: 'transform 0.2s ease',
             backgroundColor: 'transparent', 
-            backgroundImage: 'url("ok.png")',//변경 필요
+            backgroundImage: 'url("확인버튼.png")',//수정 발생
             backgroundSize: 'cover' 
         });
         
@@ -645,22 +651,26 @@ $(document).ready(function() {
     let wallX2 = canvas.width * 5 / 7;
     let wallY = paddleY - 1;
     let snowAbilityActive = sessionStorage.getItem('snowAbilityActive') === 'true';
+
+    // icewall 이미지를 로드
+    let icewallImage = new Image();
+    icewallImage.src = 'icewall.png';
+
+    // 이미지 로드 완료 핸들러
+    icewallImage.onload = function() {
+        console.log('Icewall image loaded.');
+        drawGame(); // 이미지가 로드된 후 게임을 다시 그리기
+    }
+
     function drawWalls() {
-        if(snowAbilityActive){
-            //벽1
-            ctx.beginPath();
-            ctx.rect(wallX1, wallY, wallSize, paddleHeight);
-            ctx.fillStyle = 'blue';
-            ctx.fill();
-            ctx.closePath();
-            //벽2
-            ctx.beginPath();
-            ctx.rect(wallX2, wallY, wallSize, paddleHeight);
-            ctx.fillStyle = 'blue';
-            ctx.fill();
-            ctx.closePath();
+        if (snowAbilityActive) {
+            // 벽1
+            ctx.drawImage(icewallImage, wallX1, wallY, wallSize, paddleHeight);
+            // 벽2
+            ctx.drawImage(icewallImage, wallX2, wallY, wallSize, paddleHeight);
         }
     }
+
 
     // 게임 그리기 함수
     function drawGame() {
