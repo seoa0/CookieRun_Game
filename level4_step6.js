@@ -12,7 +12,7 @@ $(document).ready(function() {
 
     // 돌아가기 버튼 클릭 시 이전 html로 이동
     $('.back-button').click(function() {
-        goToPage('level2.html'); 
+        goToPage('level4.html'); 
     });
 
     // 플레이어의 생명 수
@@ -328,7 +328,7 @@ $(document).ready(function() {
                 gameClear = true;
                 //삭제 수정 발생
                 clearInterval(gameStart);
-                createPopup("level2.html", "clear2.png");//수정 발생
+                createPopup("level4.html", "clear4.png");//수정 발생
                 //삭제 수정 발생
             }
     
@@ -413,7 +413,7 @@ $(document).ready(function() {
                                 //삭제 수정 발생
                                 clearInterval(bonusgame);
                                 clearInterval(gameStart);
-                                createPopup("level2.html", "clear2.png");//수정 발생
+                                createPopup("level4.html", "clear4.png");//수정 발생
                                 //삭제 수정 발생
                             }
                         }
@@ -595,7 +595,7 @@ $(document).ready(function() {
         //팝업창 개설 -> 게임 오버 OR 게임 클리어 출력 + 아래에 확인 버튼 생성
         //->확인 버튼에서 click 이벤트 발생할 경우 goToPage(~); 실행
         sessionStorage.setItem("gameClear", gameClear);
-        createPopup('level2.html', 'gameover.png');
+        createPopup('level4.html', 'gameover.png');
     }
 
     // 키보드 다운 이벤트 핸들러

@@ -424,30 +424,33 @@ $(document).ready(function() {
     }
 
     // 패들과 충돌처리
-    function bonusCollisionPaddle() {
-        balls.forEach(function(ball) {
-            if (ball.bonusY + ball.bonusDy > canvas.height - paddleHeight - 20) {
-                if (ball.bonusX > bonuspaddleX && ball.bonusX < bonuspaddleX + paddleWidth) {
-                    ball.bonusDy = -ball.bonusDy;
-                    // 패들과의 충돌 위치에 따라 공의 이동 방향을 조정
-                    let collisionPoint = ball.bonusX - (bonuspaddleX + paddleWidth / 2);
-                    collisionPoint = collisionPoint / (paddleWidth / 2);
-                    let angle = collisionPoint * (Math.PI / 3); // 최대 60도 각도로 튕기기
-                    ball.bonusDx = 2 * parseFloat(sessionStorage.getItem('dx')) * Math.sin(angle);
-                    ball.bonusDy = 2 * parseFloat(sessionStorage.getItem('dy')) * Math.cos(angle);
-                }
-            }
-        });
-    }
+function bonusCollisionPaddle() {
+    balls.forEach(function(ball) {
+        if (ball.bonusY + ball.bonusDy > bonuspaddleY && ball.bonusY + ball.bonusDy < bonuspaddleY + paddleHeight) {
+            if (ball.bonusX > bonuspaddleX && ball.bonusX < bonuspaddleX + paddleWidth) {
+                // 패들과의 충돌 위치에 따라 공의 이동 방향을 조정
+                let collisionPoint = ball.bonusX - (bonuspaddleX + paddleWidth / 2);
+                collisionPoint = collisionPoint / (paddleWidth / 2);
+                let angle = collisionPoint * (Math.PI / 3); // 최대 60도 각도로 튕기기
 
-     // 패들 그리기 함수
-     function drawBonusPaddle() {
-        ctx.beginPath();
-        ctx.rect(bonuspaddleX, bonuspaddleY, paddleWidth, paddleHeight);
-        ctx.fillStyle = 'green';
-        ctx.fill();
-        ctx.closePath();
-    }
+                // 기존 속도를 가져와서 새로운 속도로 계산
+                let speed = Math.sqrt(ball.bonusDx * ball.bonusDx + ball.bonusDy * ball.bonusDy);
+                ball.bonusDx = speed * Math.sin(angle);
+                ball.bonusDy = -speed * Math.cos(angle); // 공이 위로 튕기도록 Y축 속도를 음수로 설정
+            }
+        }
+    });
+}
+
+// 패들 그리기 함수
+function drawBonusPaddle() {
+    ctx.beginPath();
+    ctx.rect(bonuspaddleX, bonuspaddleY, paddleWidth, paddleHeight);
+    ctx.fillStyle = 'green';
+    ctx.fill();
+    ctx.closePath();
+}
+
 
     // 패들 이동 함수
     function movebonusPaddle() {

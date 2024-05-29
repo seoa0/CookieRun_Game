@@ -1,0 +1,115 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 800px;
+    height: 700px;
+    margin: 30px auto 0; 
+    transition: opacity 0.5s ease;
+    opacity: 0;
+    background-color: #D8AE7E;
+}
+
+body.fade-in {
+    opacity: 1; 
+}
+
+body.fade-out {
+    opacity: 0;
+}
+
+header {
+    margin-top: 0;
+    padding-top: 20px;
+    padding-left: 30px;
+    width: 770px;
+    height: 150px;
+/*    background-color: lightpink; 
+    opacity: 0.5;*/
+    line-height: 80px;
+    position: relative;
+}
+
+#ep1_title {
+    position: absolute;
+    width: 400px;
+    left: 200px;
+    top: 30px;
+}
+
+.heart {
+    position: absolute;
+    width: 200px;
+    right: -10px;
+    top: 40px;
+}
+
+/* 보너스타임 안보이게 해둠, 위치도 설정해줘야함 */
+#bonustime {
+    display: none;
+    position: absolute;
+    width: 250px;
+    right: 0px;
+    top: 100px;
+}
+
+footer {
+    margin-bottom: 0;
+    width: 800px;
+    height: 30px;
+/*    background-color: lightpink; 
+    opacity: 0.5;*/
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    height: 495px;
+}
+
+.left, .right {
+    width: 30px;
+    height: 500px;
+/*    background-color: #f6f9d4; 
+    opacity: 0.5;*/
+}
+
+.main {
+    width: 740px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    
+}
+
+#page-wrapper {
+    width: 800px;
+    height: 700px;
+    background-image: url('game_frame.png'); 
+    background-size: cover; 
+}
+
+.back-button {
+    width: 70px;
+    height: 70px;
+    border: none;
+    background-size: cover; 
+    background-color: transparent;
+    background-image: url('back_button.png'); 
+    transition: transform 0.2s ease;
+}
+
+
+#myCanvars {
+    width: 740px;
+    height: 500px;
+/*    border: 1px solid #000;*/
+    display: block;
+    margin: 0 auto;
+}
+

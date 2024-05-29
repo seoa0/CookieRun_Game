@@ -233,8 +233,8 @@ $(document).ready(function() {
     function drawBlocks() {
         if (devilAbilityActive) {
             deleteBlock(blocks); // devilAbilityActive가 true일 때 블록을 삭제
-            // devilAbilityActive = false; // 블록 삭제 후 devilAbilityActive를 false로 설정
-            sessionStorage.setItem('devilAbilityActive', 'false'); // 세션 저장소에서도 업데이트
+            devilAbilityActive = false; // 블록 삭제 후 devilAbilityActive를 false로 설정
+            // sessionStorage.setItem('devilAbilityActive', 'false'); // 세션 저장소에서도 업데이트
         }
     
         for (let c = 0; c < blockColumnCount; c++) {
@@ -426,28 +426,31 @@ $(document).ready(function() {
     // 패들과 충돌처리
     function bonusCollisionPaddle() {
         balls.forEach(function(ball) {
-            if (ball.bonusY + ball.bonusDy > canvas.height - paddleHeight - 20) {
+            if (ball.bonusY + ball.bonusDy > bonuspaddleY && ball.bonusY + ball.bonusDy < bonuspaddleY + paddleHeight) {
                 if (ball.bonusX > bonuspaddleX && ball.bonusX < bonuspaddleX + paddleWidth) {
-                    ball.bonusDy = -ball.bonusDy;
                     // 패들과의 충돌 위치에 따라 공의 이동 방향을 조정
                     let collisionPoint = ball.bonusX - (bonuspaddleX + paddleWidth / 2);
                     collisionPoint = collisionPoint / (paddleWidth / 2);
                     let angle = collisionPoint * (Math.PI / 3); // 최대 60도 각도로 튕기기
-                    ball.bonusDx = 2 * parseFloat(sessionStorage.getItem('dx')) * Math.sin(angle);
-                    ball.bonusDy = 2 * parseFloat(sessionStorage.getItem('dy')) * Math.cos(angle);
+
+                    // 기존 속도를 가져와서 새로운 속도로 계산
+                    let speed = Math.sqrt(ball.bonusDx * ball.bonusDx + ball.bonusDy * ball.bonusDy);
+                    ball.bonusDx = speed * Math.sin(angle);
+                    ball.bonusDy = -speed * Math.cos(angle); // 공이 위로 튕기도록 Y축 속도를 음수로 설정
                 }
             }
         });
     }
 
-     // 패들 그리기 함수
-     function drawBonusPaddle() {
+    // 패들 그리기 함수
+    function drawBonusPaddle() {
         ctx.beginPath();
         ctx.rect(bonuspaddleX, bonuspaddleY, paddleWidth, paddleHeight);
         ctx.fillStyle = 'green';
         ctx.fill();
         ctx.closePath();
     }
+
 
     // 패들 이동 함수
     function movebonusPaddle() {
@@ -592,7 +595,7 @@ $(document).ready(function() {
         //팝업창 개설 -> 게임 오버 OR 게임 클리어 출력 + 아래에 확인 버튼 생성
         //->확인 버튼에서 click 이벤트 발생할 경우 goToPage(~); 실행
         sessionStorage.setItem("gameClear", gameClear);
-        createPopup('level1.html', 'gameover.png');
+        createPopup('level2.html', 'gameover.png');
     }
 
     // 키보드 다운 이벤트 핸들러

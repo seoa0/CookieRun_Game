@@ -12,7 +12,7 @@ $(document).ready(function() {
 
     // 돌아가기 버튼 클릭 시 이전 html로 이동
     $('.back-button').click(function() {
-        goToPage('level2.html'); 
+        goToPage('level4.html'); 
     });
 
     // 플레이어의 생명 수
@@ -135,9 +135,9 @@ $(document).ready(function() {
     // 마카롱맛 쿠키는 3번 맞아야 없어지는 블록 갯수 0개
     let macaroonAbilityActive = sessionStorage.getItem('macaroonAbilityActive') === 'true';
 
-    // 임의의 18개 블록 선택
+    // 임의의 8개 블록 선택
     let randomBlocks = [];
-    while (randomBlocks.length < 18) {
+    while (randomBlocks.length < 8) {
         let randX = Math.floor(Math.random() * blockColumnCount);
         let randY = Math.floor(Math.random() * blockRowCount);
         if (!randomBlocks.some(block => block.x === randX && block.y === randY)) {
@@ -147,9 +147,9 @@ $(document).ready(function() {
                 initialHitValue = 1;
             }
             else{
-                if (randomBlocks.length < 9) {
+                if (randomBlocks.length < 4) {
                     initialHitValue = 3;
-                } else if (randomBlocks.length < 18) {
+                } else if (randomBlocks.length < 8) {
                     initialHitValue = 2;
                 }
             }
@@ -328,7 +328,7 @@ $(document).ready(function() {
                 gameClear = true;
                 //삭제 수정 발생
                 clearInterval(gameStart);
-                createPopup("level2.html", "clear2.png");//수정 발생
+                createPopup("level4_step2.html", "19.png");//수정 발생
                 //삭제 수정 발생
             }
     
@@ -413,7 +413,7 @@ $(document).ready(function() {
                                 //삭제 수정 발생
                                 clearInterval(bonusgame);
                                 clearInterval(gameStart);
-                                createPopup("level2.html", "clear2.png");//수정 발생
+                                createPopup("level4_step2.html", "19.png");//수정 발생
                                 //삭제 수정 발생
                             }
                         }
@@ -423,33 +423,33 @@ $(document).ready(function() {
         });
     }
 
-        // 패들과 충돌처리
-    function bonusCollisionPaddle() {
-        balls.forEach(function(ball) {
-            if (ball.bonusY + ball.bonusDy > bonuspaddleY && ball.bonusY + ball.bonusDy < bonuspaddleY + paddleHeight) {
-                if (ball.bonusX > bonuspaddleX && ball.bonusX < bonuspaddleX + paddleWidth) {
-                    // 패들과의 충돌 위치에 따라 공의 이동 방향을 조정
-                    let collisionPoint = ball.bonusX - (bonuspaddleX + paddleWidth / 2);
-                    collisionPoint = collisionPoint / (paddleWidth / 2);
-                    let angle = collisionPoint * (Math.PI / 3); // 최대 60도 각도로 튕기기
+    // 패들과 충돌처리
+function bonusCollisionPaddle() {
+    balls.forEach(function(ball) {
+        if (ball.bonusY + ball.bonusDy > bonuspaddleY && ball.bonusY + ball.bonusDy < bonuspaddleY + paddleHeight) {
+            if (ball.bonusX > bonuspaddleX && ball.bonusX < bonuspaddleX + paddleWidth) {
+                // 패들과의 충돌 위치에 따라 공의 이동 방향을 조정
+                let collisionPoint = ball.bonusX - (bonuspaddleX + paddleWidth / 2);
+                collisionPoint = collisionPoint / (paddleWidth / 2);
+                let angle = collisionPoint * (Math.PI / 3); // 최대 60도 각도로 튕기기
 
-                    // 기존 속도를 가져와서 새로운 속도로 계산
-                    let speed = Math.sqrt(ball.bonusDx * ball.bonusDx + ball.bonusDy * ball.bonusDy);
-                    ball.bonusDx = speed * Math.sin(angle);
-                    ball.bonusDy = -speed * Math.cos(angle); // 공이 위로 튕기도록 Y축 속도를 음수로 설정
-                }
+                // 기존 속도를 가져와서 새로운 속도로 계산
+                let speed = Math.sqrt(ball.bonusDx * ball.bonusDx + ball.bonusDy * ball.bonusDy);
+                ball.bonusDx = speed * Math.sin(angle);
+                ball.bonusDy = -speed * Math.cos(angle); // 공이 위로 튕기도록 Y축 속도를 음수로 설정
             }
-        });
-    }
+        }
+    });
+}
 
-    // 패들 그리기 함수
-    function drawBonusPaddle() {
-        ctx.beginPath();
-        ctx.rect(bonuspaddleX, bonuspaddleY, paddleWidth, paddleHeight);
-        ctx.fillStyle = 'green';
-        ctx.fill();
-        ctx.closePath();
-    }
+// 패들 그리기 함수
+function drawBonusPaddle() {
+    ctx.beginPath();
+    ctx.rect(bonuspaddleX, bonuspaddleY, paddleWidth, paddleHeight);
+    ctx.fillStyle = 'green';
+    ctx.fill();
+    ctx.closePath();
+}
 
 
     // 패들 이동 함수
@@ -595,7 +595,7 @@ $(document).ready(function() {
         //팝업창 개설 -> 게임 오버 OR 게임 클리어 출력 + 아래에 확인 버튼 생성
         //->확인 버튼에서 click 이벤트 발생할 경우 goToPage(~); 실행
         sessionStorage.setItem("gameClear", gameClear);
-        createPopup('level2.html', 'gameover.png');
+        createPopup('level4.html', 'gameover.png');
     }
 
     // 키보드 다운 이벤트 핸들러
