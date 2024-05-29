@@ -122,7 +122,7 @@ $(document).ready(function() {
             sessionStorage.setItem('devilAbilityActive', 'false'); // 악마맛 쿠키 비활성화
 
             // level3
-            sessionStorage.setItem('ballRadius', 15); // 마법사맛 쿠키 공 반지름 1.5배
+            sessionStorage.setItem('ballRadius', 10); // 마법사맛 쿠키 공 반지름 초기화
             sessionStorage.setItem('prophetAbilityActive', 'false'); // 예언자맛 쿠키 비활성화
             sessionStorage.setItem('dx', '2');
             sessionStorage.setItem('dy', '-2'); // 연금술사맛 쿠키 공 속도 초기화
@@ -157,14 +157,14 @@ $(document).ready(function() {
             sessionStorage.setItem('devilAbilityActive', 'false'); // 악마맛 쿠키 비활성화
 
             // level3
-            sessionStorage.setItem('ballRadius', 15); // 마법사맛 쿠키 공 반지름 1.5배
+            sessionStorage.setItem('ballRadius', 10); // 마법사맛 쿠키 공 반지름 초기화
             sessionStorage.setItem('prophetAbilityActive', 'false'); // 예언자맛 쿠키 비활성화
             sessionStorage.setItem('dx', '2');
             sessionStorage.setItem('dy', '-2'); // 연금술사맛 쿠키 공 속도 초기화
 
             //level4
             sessionStorage.setItem('macaroonAbilityActive', 'false'); // 마카롱맛 쿠키
-            sessionStorage.setItem('hearts', '4'); // 우유푸딩맛 쿠키 하트 갯수 5개
+            sessionStorage.setItem('hearts', '4'); // 우유푸딩맛 쿠키 하트 갯수 4개
             sessionStorage.setItem('paddleSpeed', 5); // 팬케이크맛 쿠키 패들 이동속도 초기화
         }
 
@@ -192,7 +192,7 @@ $(document).ready(function() {
             sessionStorage.setItem('devilAbilityActive', 'false'); // 악마맛 쿠키 비활성화
 
             // level3
-            sessionStorage.setItem('ballRadius', 15); // 마법사맛 쿠키 공 반지름 1.5배
+            sessionStorage.setItem('ballRadius', 10); // 마법사맛 쿠키 공 반지름 초기화
             sessionStorage.setItem('prophetAbilityActive', 'false'); // 예언자맛 쿠키 비활성화
             sessionStorage.setItem('dx', '2');
             sessionStorage.setItem('dy', '-2'); // 연금술사맛 쿠키 공 속도 초기화
@@ -212,7 +212,7 @@ $(document).ready(function() {
         cbutton1.hover(function() {
             // 클릭되지 않았을 때만 hover 효과 적용
             if (!princessClicked) {
-                $(this).css('backgroundImage', 'url("princess_skill.png")');
+                $(this).css('backgroundImage', 'url("macaron_skill.png")');
             }
         }, function() {
             if (!princessClicked) {
@@ -239,7 +239,7 @@ $(document).ready(function() {
         // milkpuddingCookie 버튼
         cbutton2.hover(function() {
             if (!snowClicked) {
-                $(this).css('backgroundImage', 'url("snow_skill.png")');
+                $(this).css('backgroundImage', 'url("pudding_skill.png")');
             }
         }, function() {
             if (!snowClicked) {
@@ -265,7 +265,7 @@ $(document).ready(function() {
         // pancakeCookie 버튼
         cbutton3.hover(function() {
             if (!wolfClicked) {
-                $(this).css('backgroundImage', 'url("wolf_skill.png")');
+                $(this).css('backgroundImage', 'url("pancake_skill.png")');
             }
         }, function() {
             if (!wolfClicked) {

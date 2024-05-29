@@ -122,7 +122,7 @@ $(document).ready(function() {
             sessionStorage.setItem('devilAbilityActive', 'false'); // 악마맛 쿠키 비활성화
 
             // level3
-            sessionStorage.setItem('ballRadius', 20); // 마법사맛 쿠키 공 반지름 1.5배
+            sessionStorage.setItem('ballRadius', 20); // 마법사맛 쿠키 공 반지름 2배
             sessionStorage.setItem('prophetAbilityActive', 'false'); // 예언자맛 쿠키 비활성화
             sessionStorage.setItem('dx', '2');
             sessionStorage.setItem('dy', '-2'); // 연금술사맛 쿠키 공 속도 초기화
@@ -212,7 +212,7 @@ $(document).ready(function() {
         cbutton1.hover(function() {
             // 클릭되지 않았을 때만 hover 효과 적용
             if (!princessClicked) {
-                $(this).css('backgroundImage', 'url("princess_skill.png")');
+                $(this).css('backgroundImage', 'url("wizard_skill.png")');
             }
         }, function() {
             if (!princessClicked) {
@@ -239,7 +239,7 @@ $(document).ready(function() {
         // snow 버튼
         cbutton2.hover(function() {
             if (!snowClicked) {
-                $(this).css('backgroundImage', 'url("snow_skill.png")');
+                $(this).css('backgroundImage', 'url("prophet_skill.png")');
             }
         }, function() {
             if (!snowClicked) {
@@ -265,7 +265,7 @@ $(document).ready(function() {
         // wolf 버튼
         cbutton3.hover(function() {
             if (!wolfClicked) {
-                $(this).css('backgroundImage', 'url("wolf_skill.png")');
+                $(this).css('backgroundImage', 'url("magic_skill.png")');
             }
         }, function() {
             if (!wolfClicked) {
