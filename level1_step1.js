@@ -111,11 +111,11 @@ $(document).ready(function() {
 
     let score = 0;
 
-    // 랜덤으로 보너스타임 블록 선택                                             
+    // 랜덤으로 보너스타임 블록 선택                                             // 수정!!
     let specialBlocks = [];
     let prophetAbilityActive = sessionStorage.getItem('prophetAbilityActive') === 'true'; // 예언자맛 쿠키 
 
-    function getRandomBlock(exclude) {                                     
+    function getRandomBlock(exclude) {                                      // 추가!!
         let block;
         do {
             block = {
@@ -265,11 +265,7 @@ $(document).ready(function() {
     // 공주맛 쿠키는 보너스 타임 두배
     bonustimeTime = parseFloat(sessionStorage.getItem('bonustimeTime'));
 
-    //스테이지 단계 표시
-    let currentStep = 1;
-    let pngStep = 1;//수정 발생, level2에서는 pngStep = 7, level 3에서는 pngStep = 13 ...
-    let nextPageUrl;
-    let nextImageUrl;//수정 발생
+    //삭제 수정 발생
     
     // 공과 블록 간의 충돌 감지
     var bonusgame;
@@ -314,19 +310,10 @@ $(document).ready(function() {
             // 만약 클리어 블록을 깼다면 게임 클리어 처리
             if (block.isClear && gameClear === false) {
                 gameClear = true;
-                currentStep = currentStep + 1;
-                if(currentStep != 7){
-                    nextPageUrl = "level1_step" + currentStep + ".html";
-                    pngStep = pngStep + 1;//수정 발생
-                    nextImageUrl = pngStep + ".png";//수정 발생
-                    clearInterval(gameStart);
-                    createPopup(nextPageUrl, nextImageUrl);//수정 발생
-                }
-                else{
-                    nextPageUrl = "level1.html";//수정 발생 (소문자 p -> 대문자 P)
-                    clearInterval(gameStart);
-                    createPopup(nextPageUrl, 'clear1.png');
-                }
+                //삭제 수정 발생
+                clearInterval(gameStart);
+                createPopup("level1_step2.html", "2.png");//수정 발생
+                //삭제 수정 발생
             }
     
             // 만약 보너스타임 블록을 깼다면 보너스타임 화면을 표시하고, 10초 후에 감추고 공을 5개로 증가시킴
@@ -407,22 +394,11 @@ $(document).ready(function() {
                             // 만약 클리어 블록을 깼다면 게임 클리어 처리
                             if (c === clearX && r === clearY && gameClear === false) {
                                 gameClear = true;
-                                currentStep = currentStep + 1;
-                                if(currentStep != 7){
-                                    nextPageUrl = "level1_step" + currentStep + ".html";
-                                    console.log(nextPageUrl);
-                                    pngStep = pngStep + 1;//수정 발생
-                                    nextImageUrl = pngStep + ".png";//수정 발생
-                                    clearInterval(bonusgame);
-                                    clearInterval(gameStart);
-                                    createPopup(nextPageUrl, nextImageUrl);//수정 발생
-                                }
-                                else{
-                                    nextPageUrl = "level1.html";
-                                    clearInterval(bonusgame);
-                                    clearInterval(gameStart);
-                                    createPopup(nextPageUrl, 'clear1.png');
-                                }
+                                //삭제 수정 발생
+                                clearInterval(bonusgame);
+                                clearInterval(gameStart);
+                                createPopup("level1_step2.html", "2.png");//수정 발생
+                                //삭제 수정 발생
                             }
                         }
                     }
