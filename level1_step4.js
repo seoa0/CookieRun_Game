@@ -233,8 +233,8 @@ for (let c = 0; c < blockColumnCount; c++) {
     function drawBlocks() {
         if (devilAbilityActive) {
             deleteBlock(blocks); // devilAbilityActive가 true일 때 블록을 삭제
-            // devilAbilityActive = false; // 블록 삭제 후 devilAbilityActive를 false로 설정
-            sessionStorage.setItem('devilAbilityActive', 'false'); // 세션 저장소에서도 업데이트
+            devilAbilityActive = false; // 블록 삭제 후 devilAbilityActive를 false로 설정
+            // sessionStorage.setItem('devilAbilityActive', 'false'); // 세션 저장소에서도 업데이트
         }
     
         for (let c = 0; c < blockColumnCount; c++) {
