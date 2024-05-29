@@ -167,8 +167,24 @@ $(document).ready(function() {
             let isSpecial = specialBlocks.some(b => b.x === c && b.y === r);
             let randomBlock = randomBlocks.find(block => block.x === c && block.y === r);
             let isRandomBlock = !!randomBlock;
-            let remainingHits = randomBlock ? randomBlock.initialHitValue : 1;
-            blocks[c][r] = { x: 0, y: 0, status: 1, isSpecial: isSpecial, remainingHits: randomBlock ? randomBlock.initialHitValue : 1, isRandom: isRandomBlock , isClear: isClear}; // 각 블록의 초기 상태
+
+            // remainingHits 설정
+            let remainingHits;
+            if (isSpecial || isClear) {
+                remainingHits = 1; // isSpecial 또는 isClear가 true인 경우 1로 설정
+            } else {
+                remainingHits = randomBlock ? randomBlock.initialHitValue : 1;
+            }
+
+            blocks[c][r] = {
+                x: 0,
+                y: 0,
+                status: 1,
+                isSpecial: isSpecial,
+                remainingHits: remainingHits,
+                isRandom: isRandomBlock,
+                isClear: isClear
+            }; // 각 블록의 초기 상태
         }
     }
 

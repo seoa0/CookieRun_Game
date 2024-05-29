@@ -159,34 +159,34 @@ $(document).ready(function() {
 
     // 블록 배열 생성
     let blocks = [];
-for (let c = 0; c < blockColumnCount; c++) {
-    blocks[c] = [];
-    for (let r = 0; r < blockRowCount; r++) {
-        // 스페셜 블록 여부를 랜덤으로 결정
-        let isClear = (c === clearX && r === clearY);
-        let isSpecial = specialBlocks.some(b => b.x === c && b.y === r);
-        let randomBlock = randomBlocks.find(block => block.x === c && block.y === r);
-        let isRandomBlock = !!randomBlock;
+    for (let c = 0; c < blockColumnCount; c++) {
+        blocks[c] = [];
+        for (let r = 0; r < blockRowCount; r++) {
+            // 스페셜 블록 여부를 랜덤으로 결정
+            let isClear = (c === clearX && r === clearY);
+            let isSpecial = specialBlocks.some(b => b.x === c && b.y === r);
+            let randomBlock = randomBlocks.find(block => block.x === c && block.y === r);
+            let isRandomBlock = !!randomBlock;
 
-        // remainingHits 설정
-        let remainingHits;
-        if (isSpecial || isClear) {
-            remainingHits = 1; // isSpecial 또는 isClear가 true인 경우 1로 설정
-        } else {
-            remainingHits = randomBlock ? randomBlock.initialHitValue : 1;
+            // remainingHits 설정
+            let remainingHits;
+            if (isSpecial || isClear) {
+                remainingHits = 1; // isSpecial 또는 isClear가 true인 경우 1로 설정
+            } else {
+                remainingHits = randomBlock ? randomBlock.initialHitValue : 1;
+            }
+
+            blocks[c][r] = {
+                x: 0,
+                y: 0,
+                status: 1,
+                isSpecial: isSpecial,
+                remainingHits: remainingHits,
+                isRandom: isRandomBlock,
+                isClear: isClear
+            }; // 각 블록의 초기 상태
         }
-
-        blocks[c][r] = {
-            x: 0,
-            y: 0,
-            status: 1,
-            isSpecial: isSpecial,
-            remainingHits: remainingHits,
-            isRandom: isRandomBlock,
-            isClear: isClear
-        }; // 각 블록의 초기 상태
     }
-}
 
     // 게임 클리어 여부
     let gameClear = false;
