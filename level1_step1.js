@@ -528,7 +528,7 @@ $(document).ready(function() {
             border: 'none',
             transition: 'transform 0.2s ease',
             backgroundColor: 'transparent', 
-            backgroundImage: 'url("확인버튼.png")',//수정 발생
+            backgroundImage: 'url("ok.png")',//수정 발생
             backgroundSize: 'cover' 
         });
         
