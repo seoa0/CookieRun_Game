@@ -135,9 +135,9 @@ $(document).ready(function() {
     // 마카롱맛 쿠키는 3번 맞아야 없어지는 블록 갯수 0개
     let macaroonAbilityActive = sessionStorage.getItem('macaroonAbilityActive') === 'true';
 
-    // 임의의 10개 블록 선택
+    // 임의의 18개 블록 선택
     let randomBlocks = [];
-    while (randomBlocks.length < 8) {
+    while (randomBlocks.length < 18) {
         let randX = Math.floor(Math.random() * blockColumnCount);
         let randY = Math.floor(Math.random() * blockRowCount);
         if (!randomBlocks.some(block => block.x === randX && block.y === randY)) {
@@ -147,9 +147,9 @@ $(document).ready(function() {
                 initialHitValue = 1;
             }
             else{
-                if (randomBlocks.length < 5) {
+                if (randomBlocks.length < 9) {
                     initialHitValue = 3;
-                } else if (randomBlocks.length < 10) {
+                } else if (randomBlocks.length < 18) {
                     initialHitValue = 2;
                 }
             }
@@ -324,16 +324,16 @@ for (let c = 0; c < blockColumnCount; c++) {
             drawScore(); // 점수를 업데이트하여 화면에 표시
     
             // 만약 클리어 블록을 깼다면 게임 클리어 처리
-            if (block.isClear && block.status == 0 && gameClear === false) {
+            if (block.isClear && gameClear === false) {
                 gameClear = true;
                 //삭제 수정 발생
                 clearInterval(gameStart);
-                createPopup("level1_step3.html", "3.png");//수정 발생
+                createPopup("level1.html", "6.png");//수정 발생
                 //삭제 수정 발생
             }
     
             // 만약 보너스타임 블록을 깼다면 보너스타임 화면을 표시하고, 10초 후에 감추고 공을 5개로 증가시킴
-            if (block.isSpecial && block.status == 0) {
+            if (block.isSpecial) {
                 document.getElementById('bonustime').style.display = 'block';
                 clearInterval(gameStart);
                 bonusgame = setInterval(drawBonusGame, 10); // 공을 5개로 증가시킴
@@ -354,7 +354,7 @@ for (let c = 0; c < blockColumnCount; c++) {
     paddleSpeed = parseFloat(sessionStorage.getItem('paddleSpeed'));
     
     
-    //보너스 공 3개 만들기
+    //보너스 공 5개 만들기
     var balls = [];
     var ballnumber = 3;   
     for(var i =0; i < ballnumber; i++){
@@ -413,7 +413,7 @@ for (let c = 0; c < blockColumnCount; c++) {
                                 //삭제 수정 발생
                                 clearInterval(bonusgame);
                                 clearInterval(gameStart);
-                                createPopup("level1_step3.html", "3.png");//수정 발생
+                                createPopup("level1.html", "6.png");//수정 발생
                                 //삭제 수정 발생
                             }
                         }

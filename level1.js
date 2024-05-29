@@ -114,7 +114,7 @@ $(document).ready(function() {
             sessionStorage.setItem('ballImage', 'princess_ball.png'); // 공 이미지 변경
             // level1
             sessionStorage.setItem('bonustimeTime', '20000'); // 공주맛 쿠키 보너스타임 지속시간 두배
-            sessionStorage.setItem('snowAbilityActive', 'false'); // 눈설탕 능력 비활성화   
+            sessionStorage.setItem('snowAbilityActive', 'true'); // 눈설탕 능력 비활성화   
             sessionStorage.setItem('wolfAbilityActive', 'false'); // 웨어울프 능력 비활성화
 
             // level2
